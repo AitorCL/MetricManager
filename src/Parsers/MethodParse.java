@@ -1,6 +1,4 @@
-
-package Parse;
+package Parsers;
 
 public class MethodParse {
-    
 }

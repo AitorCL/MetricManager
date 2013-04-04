@@ -1,6 +1,6 @@
-
 package MetricManager;
 
 public abstract class MetricManager {
-    public abstract int searchLineNumber();    
+
+    public abstract int searchLineNumber();
 }
