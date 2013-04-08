@@ -11,6 +11,6 @@ public class Analyzer {
     }
 
     public void startParse() throws FileNotFoundException, IOException {
-        packageParse.AnalyzePackage(new File("c:/ParseTest"));
+        packageParse.AnalyzePackage(new File("c:/ParseTest/TestDirectory4"));
     }
 }
