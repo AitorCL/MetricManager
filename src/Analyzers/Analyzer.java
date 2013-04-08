@@ -6,11 +6,14 @@ import java.io.IOException;
 
 public class Analyzer {
 
-    private PackageAnalyzer packageParse = new PackageAnalyzer(0,0,0);
+    private PackageAnalyzer packageAnalyzer = new PackageAnalyzer();
+
     public Analyzer() {
     }
 
     public void startParse() throws FileNotFoundException, IOException {
-        packageParse.AnalyzePackage(new File("c:/ParseTest/TestDirectory4"));
+        packageAnalyzer.AnalyzePackage(new File("c:/ParseTest/TestDirectory4"));
+        packageAnalyzer.showStats();
+        
     }
 }
