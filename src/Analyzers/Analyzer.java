@@ -4,16 +4,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class Analyzer {
+public abstract class Analyzer extends PackageAnalyzer {
 
-    private PackageAnalyzer packageAnalyzer = new PackageAnalyzer();
-
-    public Analyzer() {
+    public void startParse(String path) throws FileNotFoundException, IOException {
+        AnalyzePackage(new File(path));
+        showStats();     
     }
 
-    public void startParse() throws FileNotFoundException, IOException {
-        packageAnalyzer.AnalyzePackage(new File("c:/ParseTest/TestDirectory4"));
-        packageAnalyzer.showStats();
-        
-    }
+        @Override
+        public abstract void scanFile(File file) throws FileNotFoundException, IOException ;
 }

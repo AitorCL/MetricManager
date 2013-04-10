@@ -4,12 +4,14 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class PackageAnalyzer {
+public abstract class PackageAnalyzer extends FileAnalyzer {
 
     private int packageNumbers;
     private int fileNumber;
     private int efectiveCodeLines;
-    private FileAnalyzer fileAnalyzer = new FileAnalyzer();
+    @Override
+    public abstract void scanFile(File file) throws FileNotFoundException, IOException ;
+ 
 
     public PackageAnalyzer() {
         this.packageNumbers = 0;
@@ -40,10 +42,8 @@ public class PackageAnalyzer {
                 AnalyzePackage(actualFile);
             } else {
                 increaseFilesNumber();
-                fileAnalyzer.showFileName(actualFile);
-                fileAnalyzer.fileAnalyzer(actualFile);
-                fileAnalyzer.fileStats();
-
+                showFileName(actualFile);
+                scanFile(actualFile);
             }
         }
     }
