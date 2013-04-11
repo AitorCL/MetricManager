@@ -54,6 +54,7 @@ public class JavaAnalyzer extends Analyzer {
                     fileParameters.increaseClassNumber();
                     findAtributes(bufferedFile);
                     findMethods(bufferedFile);
+                    findClasses(bufferedFile);
                 }
             }
         }
@@ -61,21 +62,26 @@ public class JavaAnalyzer extends Analyzer {
 
     private void findAtributes(BufferedReader bufferedFile) throws IOException {
         String sCadena;
-        while ((sCadena = bufferedFile.readLine()) != null && sCadena.indexOf("public") == -1) {
+        while ((sCadena = bufferedFile.readLine()) != null && sCadena.indexOf("{") == -1) {
             bufferedFile.mark(sCadena.length());
             if ((sCadena.indexOf("public") != -1
                     || sCadena.indexOf("protected") != -1
                     || sCadena.indexOf("private") != -1)
-                    && (sCadena.endsWith(";")) && (!sCadena.endsWith(")"))) {
+                    && (sCadena.endsWith(";")) && (!sCadena.endsWith(");"))) {
                 fileParameters.increaseAtributeNumber();
             }
         }
-        bufferedFile.reset();
+        if (sCadena != null) {
+            bufferedFile.reset();
+        }
     }
 
+    //para cada metodo contar el numero de for while try if else
+    //ver las dependencias entre paquetes y ficheros
+    //referencia de los metodos a los atributos
     private void findMethods(BufferedReader bufferedFile) throws IOException {
-        String sCadena;
-        while ((sCadena = bufferedFile.readLine()) != null) {
+        String sCadena = bufferedFile.readLine();
+        while ((sCadena) != null && sCadena.indexOf("public class") == -1) {
             bufferedFile.mark(sCadena.length());
             if (sCadena.indexOf("public") != -1) {
                 if (sCadena.endsWith(");")) {
@@ -83,13 +89,13 @@ public class JavaAnalyzer extends Analyzer {
                 } else {
                     if (sCadena.indexOf("){") != -1) {
                         fileParameters.increaseMethodNumber();
-                    } else {
-
-                        bufferedFile.reset();
-                        findClasses(bufferedFile);
                     }
                 }
             }
+            sCadena = bufferedFile.readLine();
+        }
+        if (sCadena != null) {
+            bufferedFile.reset();
         }
     }
 }
