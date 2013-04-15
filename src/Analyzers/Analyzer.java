@@ -8,9 +8,9 @@ public abstract class Analyzer extends PackageAnalyzer {
 
     public void startParse(String path) throws FileNotFoundException, IOException {
         AnalyzePackage(new File(path));
-        showStats();
+        showStats();     
     }
 
-    @Override
-    public abstract void scanFile(File file) throws FileNotFoundException, IOException;
+        @Override
+        public abstract void scanFile(File file) throws FileNotFoundException, IOException ;
 }

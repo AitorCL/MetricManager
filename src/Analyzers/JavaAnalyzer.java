@@ -71,9 +71,12 @@ public class JavaAnalyzer extends Analyzer {
                 fileParameters.increaseAtributeNumber();
             }
         }
-        if (sCadena != null) {
+       // if (sCadena != null && fileParameters.getAtributeNumber() != 0){
+        if(sCadena != null){
+            System.out.println("antes" + sCadena);
             bufferedFile.reset();
-        }
+            System.out.println("despues" + sCadena);}
+        //}
     }
 
     //para cada metodo contar el numero de for while try if else
@@ -82,20 +85,24 @@ public class JavaAnalyzer extends Analyzer {
     private void findMethods(BufferedReader bufferedFile) throws IOException {
         String sCadena = bufferedFile.readLine();
         while ((sCadena) != null && sCadena.indexOf("public class") == -1) {
-            bufferedFile.mark(sCadena.length());
             if (sCadena.indexOf("public") != -1) {
                 if (sCadena.endsWith(");")) {
                     System.out.println(sCadena + ("interface method"));
                 } else {
                     if (sCadena.indexOf("){") != -1) {
                         fileParameters.increaseMethodNumber();
-                    }
                 }
             }
-            sCadena = bufferedFile.readLine();
         }
-        if (sCadena != null) {
+       sCadena = bufferedFile.readLine();
+       if(sCadena != null) {
+                bufferedFile.mark(sCadena.length());
+            }
+       }
+      // if(sCadena != null && fileParameters.getMethodNumber() != 0){
+        if(sCadena != null){
+            System.out.println("antes" + sCadena);
             bufferedFile.reset();
-        }
-    }
+            System.out.println("despues" + sCadena);}}
+
 }
