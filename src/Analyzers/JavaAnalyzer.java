@@ -1,9 +1,11 @@
 package Analyzers;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 public class JavaAnalyzer extends Analyzer {
@@ -14,7 +16,7 @@ public class JavaAnalyzer extends Analyzer {
     public void scanFile(File file) throws FileNotFoundException, IOException {
         BufferedReader bufferedFile = getFileBuffer(file);
         startScan(bufferedFile, file);
-        fileStats();
+        fileStats(file);
     }
 
     private BufferedReader getFileBuffer(File file) throws FileNotFoundException {
@@ -29,12 +31,26 @@ public class JavaAnalyzer extends Analyzer {
         }
         findClasses(bufferedFile);
     }
-    public void fileStats() {
-        System.out.println("   Imports: " + fileParameters.getImportNumber());
-        System.out.println("   Class :" + fileParameters.getClassNumber());
-        System.out.println("     Class atributes :" + fileParameters.getAtributeNumber());
-        System.out.println("     Class methods :" + fileParameters.getMethodNumber());
-        System.out.println("   File lines:" + fileParameters.getLineNumber());
+
+    public void fileStats(File file) throws IOException {
+        String sFichero = ("c:/ParseTest/" + showFileName(file) + "_log.txt");
+        File fichero = new File(sFichero);
+
+        if (fichero.exists()) {
+            BufferedWriter bw = new BufferedWriter(new FileWriter(sFichero));
+            bw.write("   Imports: " + fileParameters.getImportNumber() + "\n");
+            bw.write("   Class :" + fileParameters.getClassNumber() + "\n");
+            bw.write("     Class atributes :" + fileParameters.getAtributeNumber() + "\n");
+            bw.write("     Class methods :" + fileParameters.getMethodNumber() + "\n");
+            bw.write("   File lines:" + fileParameters.getLineNumber() + "\n");
+
+        }
+//        showFileName(file);
+//        System.out.println("   Imports: " + fileParameters.getImportNumber());
+//        System.out.println("   Class :" + fileParameters.getClassNumber());
+//        System.out.println("     Class atributes :" + fileParameters.getAtributeNumber());
+//        System.out.println("     Class methods :" + fileParameters.getMethodNumber());
+//        System.out.println("   File lines:" + fileParameters.getLineNumber());
     }
 
     private boolean findImports(BufferedReader bufferedFile) throws IOException {
@@ -44,15 +60,11 @@ public class JavaAnalyzer extends Analyzer {
     }
 
     private void findClasses(BufferedReader bufferedFile) throws IOException {
-        String sCadena;
-        if ((sCadena = bufferedFile.readLine()) != null) {
-            if (sCadena.indexOf("public class") != -1) {
-                    fileParameters.increaseClassNumber();
-                    fileParameters.increaseLineNumber();
-                    findAtributes(bufferedFile);
-                    findMethods(bufferedFile);
-                    findClasses(bufferedFile);
-            }
+        ClassAnalyzer classAnalyzer = new ClassAnalyzer(fileParameters);
+        if (classAnalyzer.scanForClasses(bufferedFile)) {
+            findAtributes(bufferedFile);
+            findMethods(bufferedFile);
+            findClasses(bufferedFile);
         }
     }
 
@@ -73,7 +85,7 @@ public class JavaAnalyzer extends Analyzer {
         if (fileParameters.getImportNumber() != 0) {
             bufferedFile.reset();
             return true;
-        } 
+        }
         return false;
     }
 
@@ -81,27 +93,5 @@ public class JavaAnalyzer extends Analyzer {
         if (sCadena != null) {
             bufferedFile.reset();
         }
-    }
-
-    private String scanForMethods(BufferedReader bufferedFile) throws IOException {
-        String sCadena = bufferedFile.readLine();
-        fileParameters.getLineNumber();
-        while ((sCadena) != null && sCadena.indexOf("public class") == -1) {
-            if (sCadena.indexOf("public") != -1) {
-                if (sCadena.endsWith(");")) {
-                    System.out.println(sCadena + ("interface method"));
-                } else {
-                    if (sCadena.indexOf("){") != -1) {
-                        fileParameters.increaseMethodNumber();
-                    }
-                }
-            }
-            sCadena = bufferedFile.readLine();
-            if (sCadena != null) {
-                bufferedFile.mark(sCadena.length());
-            }
-            fileParameters.increaseLineNumber();
-        }
-        return sCadena;
     }
 }

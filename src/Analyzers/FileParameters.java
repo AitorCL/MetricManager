@@ -36,15 +36,15 @@ public class FileParameters {
         this.lineNumber = lineNumber;
     }
 
-    public void resetParameters(){
-                this.classNumber = 0;
+    public void resetParameters() {
+        this.classNumber = 0;
         this.importNumber = 0;
         this.atributeNumber = 0;
         this.methodNumber = 0;
         this.lineNumber = 0;
 
     }
-    
+
     public void increaseClassNumber() {
         classNumber++;
     }

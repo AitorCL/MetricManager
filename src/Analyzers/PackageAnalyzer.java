@@ -8,28 +8,28 @@ public abstract class PackageAnalyzer extends FileAnalyzer {
 
     private int packageNumbers;
     private int fileNumber;
-    private int efectiveCodeLines;
+
     @Override
-    public abstract void scanFile(File file) throws FileNotFoundException, IOException ;
- 
+    public abstract void scanFile(File file) throws FileNotFoundException, IOException;
 
     public PackageAnalyzer() {
         this.packageNumbers = 0;
         this.fileNumber = 0;
-        this.efectiveCodeLines = 0;
     }
-    public void showStats()
-    {
-        System.out.println("Directorios Escaneados :" + packageNumbers );
+
+    public void showStats() {
+        System.out.println("Directorios Escaneados :" + packageNumbers);
         System.out.println("Archivos Escaneados :" + fileNumber);
     }
-    
+
     public void increasePackagesNumber() {
         packageNumbers++;
     }
+
     public void increaseFilesNumber() {
         fileNumber++;
     }
+
     private void showDirectoryName(File file) {
         System.out.println(file.getName() + "(Directory)");
     }
@@ -42,7 +42,6 @@ public abstract class PackageAnalyzer extends FileAnalyzer {
                 AnalyzePackage(actualFile);
             } else {
                 increaseFilesNumber();
-                showFileName(actualFile);
                 scanFile(actualFile);
             }
         }

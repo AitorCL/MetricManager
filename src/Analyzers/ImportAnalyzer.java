@@ -19,7 +19,7 @@ public class ImportAnalyzer {
             fileParameters.increaseLineNumber();
         }
     }
-    
+
     public void isImport(String String) {
         if (String.indexOf("import ") != -1) {
             fileParameters.increaseImportNumber();
