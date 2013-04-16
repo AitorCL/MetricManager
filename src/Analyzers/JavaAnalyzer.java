@@ -38,14 +38,8 @@ public class JavaAnalyzer extends Analyzer {
     }
 
     private boolean findImports(BufferedReader bufferedFile) throws IOException {
-        String sCadena = "";
-        while ((sCadena = bufferedFile.readLine()) != null && sCadena.indexOf("public") == -1) {
-            bufferedFile.mark(sCadena.length());
-            if (sCadena.indexOf("import") != -1) {
-                fileParameters.increaseImportNumber();
-            }
-            fileParameters.increaseLineNumber();
-        }
+        ImportAnalyzer importAnalyzer = new ImportAnalyzer(fileParameters);
+        importAnalyzer.scanForImports(bufferedFile);
         return moveBufferToMark(bufferedFile);
     }
 
@@ -63,17 +57,8 @@ public class JavaAnalyzer extends Analyzer {
     }
 
     private void findAtributes(BufferedReader bufferedFile) throws IOException {
-        String sCadena;
-        while ((sCadena = bufferedFile.readLine()) != null && sCadena.indexOf("{") == -1) {
-            bufferedFile.mark(sCadena.length());
-            if ((sCadena.indexOf("public") != -1
-                    || sCadena.indexOf("protected") != -1
-                    || sCadena.indexOf("private") != -1)
-                    && (sCadena.endsWith(";")) && (!sCadena.endsWith(");"))) {
-                fileParameters.increaseAtributeNumber();
-            }
-            fileParameters.increaseLineNumber();
-        }
+        String sCadena="";
+        sCadena = scanForAtributes(sCadena, bufferedFile);
         moveBufferToMark(sCadena, bufferedFile);
     }
 
@@ -82,6 +67,7 @@ public class JavaAnalyzer extends Analyzer {
     //referencia de los metodos a los atributos
     private void findMethods(BufferedReader bufferedFile) throws IOException {
         String sCadena = bufferedFile.readLine();
+        fileParameters.getLineNumber();
         while ((sCadena) != null && sCadena.indexOf("public class") == -1) {
             if (sCadena.indexOf("public") != -1) {
                 if (sCadena.endsWith(");")) {
@@ -96,6 +82,7 @@ public class JavaAnalyzer extends Analyzer {
             if (sCadena != null) {
                 bufferedFile.mark(sCadena.length());
             }
+            fileParameters.increaseLineNumber();
         }
         moveBufferToMark(sCadena, bufferedFile);
     }
@@ -114,4 +101,17 @@ public class JavaAnalyzer extends Analyzer {
         }
     }
 
+    private String scanForAtributes(String sCadena, BufferedReader bufferedFile) throws IOException {
+        while ((sCadena = bufferedFile.readLine()) != null && sCadena.indexOf("{") == -1) {
+            bufferedFile.mark(sCadena.length());
+            if ((sCadena.indexOf("public ") != -1
+                    || sCadena.indexOf("protected ") != -1
+                    || sCadena.indexOf("private ") != -1)
+                    && (sCadena.endsWith(";")) && (!sCadena.endsWith(");"))) {
+                fileParameters.increaseAtributeNumber();
+            }
+            fileParameters.increaseLineNumber();
+        }
+        return sCadena;
+    }
 }

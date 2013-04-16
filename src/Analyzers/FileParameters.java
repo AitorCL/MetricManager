@@ -16,6 +16,26 @@ public class FileParameters {
         this.lineNumber = 0;
     }
 
+    public void setClassNumber(int classNumber) {
+        this.classNumber = classNumber;
+    }
+
+    public void setImportNumber(int importNumber) {
+        this.importNumber = importNumber;
+    }
+
+    public void setAtributeNumber(int atributeNumber) {
+        this.atributeNumber = atributeNumber;
+    }
+
+    public void setMethodNumber(int methodNumber) {
+        this.methodNumber = methodNumber;
+    }
+
+    public void setLineNumber(int lineNumber) {
+        this.lineNumber = lineNumber;
+    }
+
     public void resetParameters(){
                 this.classNumber = 0;
         this.importNumber = 0;
