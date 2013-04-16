@@ -57,34 +57,16 @@ public class JavaAnalyzer extends Analyzer {
     }
 
     private void findAtributes(BufferedReader bufferedFile) throws IOException {
-        String sCadena="";
-        sCadena = scanForAtributes(sCadena, bufferedFile);
-        moveBufferToMark(sCadena, bufferedFile);
+        AtributeAnalyzer atributeAnalyzer = new AtributeAnalyzer(fileParameters);
+        moveBufferToMark(atributeAnalyzer.scanForAtributes(bufferedFile), bufferedFile);
     }
 
     //para cada metodo contar el numero de for while try if else
     //ver las dependencias entre paquetes y ficheros
     //referencia de los metodos a los atributos
     private void findMethods(BufferedReader bufferedFile) throws IOException {
-        String sCadena = bufferedFile.readLine();
-        fileParameters.getLineNumber();
-        while ((sCadena) != null && sCadena.indexOf("public class") == -1) {
-            if (sCadena.indexOf("public") != -1) {
-                if (sCadena.endsWith(");")) {
-                    System.out.println(sCadena + ("interface method"));
-                } else {
-                    if (sCadena.indexOf("){") != -1) {
-                        fileParameters.increaseMethodNumber();
-                    }
-                }
-            }
-            sCadena = bufferedFile.readLine();
-            if (sCadena != null) {
-                bufferedFile.mark(sCadena.length());
-            }
-            fileParameters.increaseLineNumber();
-        }
-        moveBufferToMark(sCadena, bufferedFile);
+        MethodAnalyzer methodAnalyzer = new MethodAnalyzer(fileParameters);
+        moveBufferToMark(methodAnalyzer.scanForMethods(bufferedFile), bufferedFile);
     }
 
     private boolean moveBufferToMark(BufferedReader bufferedFile) throws IOException {
@@ -101,14 +83,22 @@ public class JavaAnalyzer extends Analyzer {
         }
     }
 
-    private String scanForAtributes(String sCadena, BufferedReader bufferedFile) throws IOException {
-        while ((sCadena = bufferedFile.readLine()) != null && sCadena.indexOf("{") == -1) {
-            bufferedFile.mark(sCadena.length());
-            if ((sCadena.indexOf("public ") != -1
-                    || sCadena.indexOf("protected ") != -1
-                    || sCadena.indexOf("private ") != -1)
-                    && (sCadena.endsWith(";")) && (!sCadena.endsWith(");"))) {
-                fileParameters.increaseAtributeNumber();
+    private String scanForMethods(BufferedReader bufferedFile) throws IOException {
+        String sCadena = bufferedFile.readLine();
+        fileParameters.getLineNumber();
+        while ((sCadena) != null && sCadena.indexOf("public class") == -1) {
+            if (sCadena.indexOf("public") != -1) {
+                if (sCadena.endsWith(");")) {
+                    System.out.println(sCadena + ("interface method"));
+                } else {
+                    if (sCadena.indexOf("){") != -1) {
+                        fileParameters.increaseMethodNumber();
+                    }
+                }
+            }
+            sCadena = bufferedFile.readLine();
+            if (sCadena != null) {
+                bufferedFile.mark(sCadena.length());
             }
             fileParameters.increaseLineNumber();
         }
