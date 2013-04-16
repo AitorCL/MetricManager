@@ -12,15 +12,23 @@ public class JavaAnalyzer extends Analyzer {
 
     @Override
     public void scanFile(File file) throws FileNotFoundException, IOException {
-        fileParameters = new FileParameters();
-        BufferedReader bufferedFile = new BufferedReader(new FileReader(file));
-        if (!findImports(bufferedFile)) {
-            bufferedFile = new BufferedReader(new FileReader(file));
-        }
-        findClasses(bufferedFile);
+        BufferedReader bufferedFile = getFileBuffer(file);
+        startScan(bufferedFile, file);
         fileStats();
     }
 
+    private BufferedReader getFileBuffer(File file) throws FileNotFoundException {
+        fileParameters = new FileParameters();
+        BufferedReader bufferedFile = new BufferedReader(new FileReader(file));
+        return bufferedFile;
+    }
+
+    private void startScan(BufferedReader bufferedFile, File file) throws IOException {
+        if (!findImports(bufferedFile)) {
+            bufferedFile = getFileBuffer(file);
+        }
+        findClasses(bufferedFile);
+    }
     public void fileStats() {
         System.out.println("   Imports: " + fileParameters.getImportNumber());
         System.out.println("   Class :" + fileParameters.getClassNumber());
@@ -36,26 +44,20 @@ public class JavaAnalyzer extends Analyzer {
             if (sCadena.indexOf("import") != -1) {
                 fileParameters.increaseImportNumber();
             }
-            fileParameters.getLineNumber();
+            fileParameters.increaseLineNumber();
         }
-        if (fileParameters.getImportNumber() != 0) {
-            bufferedFile.reset();
-            return true;
-        } else {
-            return false;
-        }
+        return moveBufferToMark(bufferedFile);
     }
 
     private void findClasses(BufferedReader bufferedFile) throws IOException {
         String sCadena;
         if ((sCadena = bufferedFile.readLine()) != null) {
-            if (sCadena.indexOf("public") != -1) {
-                if (sCadena.indexOf("class") != -1) {
+            if (sCadena.indexOf("public class") != -1) {
                     fileParameters.increaseClassNumber();
+                    fileParameters.increaseLineNumber();
                     findAtributes(bufferedFile);
                     findMethods(bufferedFile);
                     findClasses(bufferedFile);
-                }
             }
         }
     }
@@ -70,13 +72,9 @@ public class JavaAnalyzer extends Analyzer {
                     && (sCadena.endsWith(";")) && (!sCadena.endsWith(");"))) {
                 fileParameters.increaseAtributeNumber();
             }
+            fileParameters.increaseLineNumber();
         }
-       // if (sCadena != null && fileParameters.getAtributeNumber() != 0){
-        if(sCadena != null){
-            System.out.println("antes" + sCadena);
-            bufferedFile.reset();
-            System.out.println("despues" + sCadena);}
-        //}
+        moveBufferToMark(sCadena, bufferedFile);
     }
 
     //para cada metodo contar el numero de for while try if else
@@ -91,18 +89,29 @@ public class JavaAnalyzer extends Analyzer {
                 } else {
                     if (sCadena.indexOf("){") != -1) {
                         fileParameters.increaseMethodNumber();
+                    }
                 }
             }
-        }
-       sCadena = bufferedFile.readLine();
-       if(sCadena != null) {
+            sCadena = bufferedFile.readLine();
+            if (sCadena != null) {
                 bufferedFile.mark(sCadena.length());
             }
-       }
-      // if(sCadena != null && fileParameters.getMethodNumber() != 0){
-        if(sCadena != null){
-            System.out.println("antes" + sCadena);
+        }
+        moveBufferToMark(sCadena, bufferedFile);
+    }
+
+    private boolean moveBufferToMark(BufferedReader bufferedFile) throws IOException {
+        if (fileParameters.getImportNumber() != 0) {
             bufferedFile.reset();
-            System.out.println("despues" + sCadena);}}
+            return true;
+        } 
+        return false;
+    }
+
+    private void moveBufferToMark(String sCadena, BufferedReader bufferedFile) throws IOException {
+        if (sCadena != null) {
+            bufferedFile.reset();
+        }
+    }
 
 }
