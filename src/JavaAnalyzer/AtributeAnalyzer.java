@@ -1,5 +1,6 @@
-package Analyzers;
+package JavaAnalyzer;
 
+import JavaAnalyzer.FileParameters;
 import java.io.BufferedReader;
 import java.io.IOException;
 

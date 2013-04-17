@@ -1,4 +1,6 @@
-package Analyzers;
+package JavaAnalyzer;
+
+import java.io.PrintWriter;
 
 public class FileParameters {
 
@@ -7,13 +9,19 @@ public class FileParameters {
     private int atributeNumber;
     private int methodNumber;
     private int lineNumber;
-
-    public FileParameters() {
+    private PrintWriter printWriter;
+    
+    public FileParameters(PrintWriter printWriter) {
         this.classNumber = 0;
         this.importNumber = 0;
         this.atributeNumber = 0;
         this.methodNumber = 0;
         this.lineNumber = 0;
+        this.printWriter = printWriter;
+    }
+
+    public PrintWriter getPrintWriter() {
+        return printWriter;
     }
 
     public void setClassNumber(int classNumber) {

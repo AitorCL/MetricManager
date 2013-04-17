@@ -1,5 +1,5 @@
 
-import Analyzers.JavaAnalyzer;
+import JavaAnalyzer.JavaAnalyzer;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 

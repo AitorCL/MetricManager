@@ -1,4 +1,4 @@
-package Analyzers;
+package JavaAnalyzer;
 
 import java.io.BufferedReader;
 import java.io.IOException;
