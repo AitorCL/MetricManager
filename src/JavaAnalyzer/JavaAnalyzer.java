@@ -1,5 +1,6 @@
 package JavaAnalyzer;
 
+import JavaAnalyzer.AtributeAnalyzer.AtributeAnalyzer;
 import Analyzers.Analyzer;
 import JavaAnalyzer.ImportAnalyzer.ImportAnalyzer;
 import java.io.BufferedReader;
@@ -63,6 +64,7 @@ public class JavaAnalyzer extends Analyzer {
     private void findAtributes(BufferedReader bufferedFile) throws IOException {  
         AtributeAnalyzer atributeAnalyzer = new AtributeAnalyzer(fileParameters);
         moveBufferToMark(atributeAnalyzer.scanForAtributes(bufferedFile), bufferedFile);
+        atributeAnalyzer.showAtributetStats();
         
     }
 
