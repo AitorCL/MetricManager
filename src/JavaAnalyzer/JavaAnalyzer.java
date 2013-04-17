@@ -1,8 +1,9 @@
 package JavaAnalyzer;
 
-import JavaAnalyzer.AtributeAnalyzer.AtributeAnalyzer;
 import Analyzers.Analyzer;
+import JavaAnalyzer.AtributeAnalyzer.AtributeAnalyzer;
 import JavaAnalyzer.ImportAnalyzer.ImportAnalyzer;
+import JavaAnalyzer.MethodAnalyzer.MethodAnalyzer;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -72,9 +73,9 @@ public class JavaAnalyzer extends Analyzer {
     //ver las dependencias entre paquetes y ficheros
     //referencia de los metodos a los atributos
     private void findMethods(BufferedReader bufferedFile) throws IOException {
-        
         MethodAnalyzer methodAnalyzer = new MethodAnalyzer(fileParameters);
         moveBufferToMark(methodAnalyzer.scanForMethods(bufferedFile), bufferedFile);
+        methodAnalyzer.showMethodStats();
     }
 
     private boolean moveBufferToMark(BufferedReader bufferedFile) throws IOException {

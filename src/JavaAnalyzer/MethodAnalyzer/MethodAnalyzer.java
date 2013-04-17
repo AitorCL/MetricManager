@@ -1,11 +1,13 @@
-package JavaAnalyzer;
+package JavaAnalyzer.MethodAnalyzer;
 
+import JavaAnalyzer.FileParameters;
 import java.io.BufferedReader;
 import java.io.IOException;
 
 public class MethodAnalyzer {
 
     private FileParameters fileParameters;
+    private MethodStats methodStats;
 
     public MethodAnalyzer(FileParameters fileParameters) {
         this.fileParameters = fileParameters;
@@ -28,7 +30,12 @@ public class MethodAnalyzer {
                 System.out.println(sCadena + ("interface method"));
             } else {
                 if (sCadena.indexOf("){") != -1) {
+                    //if (methodStats != null){showMethodStats();}
+                    showMethodStats();
                     fileParameters.increaseMethodNumber();
+                    methodStats = new MethodStats();
+                    methodStats.setMethodName(sCadena);
+                    howManyParameters(sCadena);
                 }
             }
         }
@@ -40,6 +47,19 @@ public class MethodAnalyzer {
             bufferedFile.mark(sCadena.length());
         }
         fileParameters.increaseLineNumber();
+        methodStats.increaseLineNumber();
         return sCadena;
+    }
+
+    public void showMethodStats() {
+        if(methodStats != null){
+        methodStats.writeStats(fileParameters.getPrintWriter());}
+    }
+
+    private void howManyParameters(String sCadena) {
+        while (sCadena.indexOf(",") > -1) {
+            sCadena = sCadena.substring(sCadena.indexOf(",") + 1, sCadena.length());
+            methodStats.increaseParamNumber();
+        }
     }
 }

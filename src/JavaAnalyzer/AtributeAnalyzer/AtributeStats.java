@@ -29,9 +29,9 @@ public class AtributeStats {
 
     public void writeStats(PrintWriter printWriter)
     {
-        printWriter.println("Atributes");
-        printWriter.println("Public : " + publicAtributes);
-        printWriter.println("Private : " + protectedAtributes);
-        printWriter.println("Protected : " + privateAtributes);
+        printWriter.println("Atributes:");
+        printWriter.println("   Public    : " + publicAtributes);
+        printWriter.println("   Private   : " + protectedAtributes);
+        printWriter.println("   Protected : " + privateAtributes);
     }   
 }
