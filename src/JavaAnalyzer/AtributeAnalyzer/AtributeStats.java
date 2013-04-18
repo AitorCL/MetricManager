@@ -15,6 +15,18 @@ public class AtributeStats {
         this.privateAtributes =0;
     }
 
+    public int getPublicAtributes() {
+        return publicAtributes;
+    }
+
+    public int getProtectedAtributes() {
+        return protectedAtributes;
+    }
+
+    public int getPrivateAtributes() {
+        return privateAtributes;
+    }
+
     public void increasePublicAtributes() {
         this.publicAtributes++;
     }

@@ -12,6 +12,15 @@ public class ImportStats {
         this.javaImports = 0;
         this.otherImports = 0;
     }
+
+    public int getJavaImports() {
+        return javaImports;
+    }
+
+    public int getOtherImports() {
+        return otherImports;
+    }
+    
     public void  increaseJavaImports(){
         this.javaImports++;
     }
