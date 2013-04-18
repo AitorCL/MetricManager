@@ -10,7 +10,7 @@ public class FileParameters {
     private int methodNumber;
     private int lineNumber;
     private PrintWriter printWriter;
-    
+
     public FileParameters(PrintWriter printWriter) {
         this.classNumber = 0;
         this.importNumber = 0;

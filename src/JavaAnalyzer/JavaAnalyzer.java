@@ -62,16 +62,13 @@ public class JavaAnalyzer extends Analyzer {
         }
     }
 
-    private void findAtributes(BufferedReader bufferedFile) throws IOException {  
+    private void findAtributes(BufferedReader bufferedFile) throws IOException {
         AtributeAnalyzer atributeAnalyzer = new AtributeAnalyzer(fileParameters);
         moveBufferToMark(atributeAnalyzer.scanForAtributes(bufferedFile), bufferedFile);
         atributeAnalyzer.showAtributetStats();
-        
+
     }
 
-    //para cada metodo contar el numero de for while try if else
-    //ver las dependencias entre paquetes y ficheros
-    //referencia de los metodos a los atributos
     private void findMethods(BufferedReader bufferedFile) throws IOException {
         MethodAnalyzer methodAnalyzer = new MethodAnalyzer(fileParameters);
         moveBufferToMark(methodAnalyzer.scanForMethods(bufferedFile), bufferedFile);
@@ -113,7 +110,7 @@ public class JavaAnalyzer extends Analyzer {
     private PrintWriter createLogFile(File file) throws IOException {
         String sFichero = ("c:/ParseTest/" + showFileName(file) + "_log.txt");
         FileWriter fileLog = new FileWriter(sFichero);
-        PrintWriter printWriter =  new PrintWriter(fileLog,true);
+        PrintWriter printWriter = new PrintWriter(fileLog, true);
         return printWriter;
     }
 }

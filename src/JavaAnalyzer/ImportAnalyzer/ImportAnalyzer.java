@@ -34,9 +34,8 @@ public class ImportAnalyzer {
 
         }
     }
-    
-    public void showImportStats()
-    {
+
+    public void showImportStats() {
         importStats.writeStats(fileParameters.getPrintWriter());
     }
 }
