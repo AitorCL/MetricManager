@@ -43,5 +43,6 @@ public class AtributeStats {
         printWriter.println("   Public    : " + publicAtributes);
         printWriter.println("   Private   : " + protectedAtributes);
         printWriter.println("   Protected : " + privateAtributes);
+        printWriter.println("");
     }
 }

@@ -8,6 +8,7 @@ public class FileParameters {
     private int importNumber;
     private int atributeNumber;
     private int methodNumber;
+    private int commentLinesNumber;
     private int lineNumber;
     private PrintWriter printWriter;
 
@@ -17,6 +18,7 @@ public class FileParameters {
         this.atributeNumber = 0;
         this.methodNumber = 0;
         this.lineNumber = 0;
+        this.commentLinesNumber = 0;
         this.printWriter = printWriter;
     }
 
@@ -53,6 +55,10 @@ public class FileParameters {
 
     }
 
+    public void increasecommentLinesNumber() {
+        commentLinesNumber++;
+    }    
+    
     public void increaseClassNumber() {
         classNumber++;
     }

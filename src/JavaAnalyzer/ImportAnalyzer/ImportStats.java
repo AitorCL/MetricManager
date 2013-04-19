@@ -29,8 +29,9 @@ public class ImportStats {
     }
 
     public void writeStats(PrintWriter printWriter) {
-        printWriter.println("Imports");
+        printWriter.println("Imports:");
         printWriter.println("   Java   : " + javaImports);
         printWriter.println("   Other  : " + otherImports);
+        printWriter.println("");
     }
 }

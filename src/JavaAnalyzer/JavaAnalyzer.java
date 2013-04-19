@@ -2,6 +2,7 @@ package JavaAnalyzer;
 
 import Analyzers.Analyzer;
 import JavaAnalyzer.AtributeAnalyzer.AtributeAnalyzer;
+import JavaAnalyzer.ClassAnalyzer.ClassAnalyzer;
 import JavaAnalyzer.ImportAnalyzer.ImportAnalyzer;
 import JavaAnalyzer.MethodAnalyzer.MethodAnalyzer;
 import java.io.BufferedReader;
@@ -56,6 +57,7 @@ public class JavaAnalyzer extends Analyzer {
     private void findClasses(BufferedReader bufferedFile) throws IOException {
         ClassAnalyzer classAnalyzer = new ClassAnalyzer(fileParameters);
         if (classAnalyzer.scanForClasses(bufferedFile)) {
+            classAnalyzer.showClassStats();
             findAtributes(bufferedFile);
             findMethods(bufferedFile);
             findClasses(bufferedFile);

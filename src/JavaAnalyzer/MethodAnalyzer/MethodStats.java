@@ -77,5 +77,6 @@ public class MethodStats {
         printWriter.println("   Parameters              :" + paramNumber);
         printWriter.println("   Lines                   :" + lineNumber);
         printWriter.println("   CyclomaticComplexity    :" + cyclomaticComplexity);
+        printWriter.println("");
     }
 }
