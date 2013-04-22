@@ -48,26 +48,26 @@ public class MethodStats {
         cyclomaticComplexity++;
     }
 
-    public void cyclomaticComplexitySearch(String sCadena) {
-        if (sCadena.contains("if")
-                || sCadena.contains("while")
-                || sCadena.contains("for")
-                || sCadena.contains("foreach")
-                || sCadena.contains("case")
-                || sCadena.contains("default")
-                || sCadena.contains("continue")
-                || sCadena.contains("catch")) {
+    public void cyclomaticComplexitySearch(String line) {
+        if (line.contains("if")
+                || line.contains("while")
+                || line.contains("for")
+                || line.contains("foreach")
+                || line.contains("case")
+                || line.contains("default")
+                || line.contains("continue")
+                || line.contains("catch")) {
             increaseCyclomaticComplexity();
-            findLogicOperatorForComplexity(sCadena, "||");
-            findLogicOperatorForComplexity(sCadena, "&&");
-            findLogicOperatorForComplexity(sCadena, "?");
+            findLogicOperatorForComplexity(line, "||");
+            findLogicOperatorForComplexity(line, "&&");
+            findLogicOperatorForComplexity(line, "?");
 
         }
     }
 
-    private void findLogicOperatorForComplexity(String sCadena, String sKey) {
-        while (sCadena.indexOf(sKey) > -1) {
-            sCadena = sCadena.substring(sCadena.indexOf(sKey) + 1, sCadena.length());
+    private void findLogicOperatorForComplexity(String line, String sKey) {
+        while (line.indexOf(sKey) > -1) {
+            line = line.substring(line.indexOf(sKey) + 1, line.length());
             increaseCyclomaticComplexity();
         }
     }

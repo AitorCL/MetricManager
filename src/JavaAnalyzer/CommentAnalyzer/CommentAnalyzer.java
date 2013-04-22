@@ -15,13 +15,13 @@ public class CommentAnalyzer {
     }
     
     
-    public void searchComment(String sCadena){
-        if (sCadena.contains("/*")){
+    public void searchComment(String line){
+        if (line.contains("/*")){
             openCommentary = true;
             fileparameters.increasecommentLinesNumber();    
             return;
         }
-        if (sCadena.contains("*/")){
+        if (line.contains("*/")){
             openCommentary = false;
         }
     }

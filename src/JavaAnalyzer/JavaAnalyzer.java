@@ -85,8 +85,8 @@ public class JavaAnalyzer extends Analyzer {
         return false;
     }
 
-    private void moveBufferToMark(String sCadena, BufferedReader bufferedFile) throws IOException {
-        if (sCadena != null) {
+    private void moveBufferToMark(String line, BufferedReader bufferedFile) throws IOException {
+        if (line != null) {
             bufferedFile.reset();
         }
     }

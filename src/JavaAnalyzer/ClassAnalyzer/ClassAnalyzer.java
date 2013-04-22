@@ -15,10 +15,10 @@ public class ClassAnalyzer {
     }
 
     public boolean scanForClasses(BufferedReader bufferedFile) throws IOException {
-        String sCadena;
-        if ((sCadena = bufferedFile.readLine()) != null) {
-            if (sCadena.contains("public class ")) {
-                classStats.setClassName(sCadena);
+        String line;
+        if ((line = bufferedFile.readLine()) != null) {
+            if (line.contains("public class ")) {
+                classStats.setClassName(line);
                 fileParameters.increaseClassNumber();
                 fileParameters.increaseLineNumber();
                 return true;

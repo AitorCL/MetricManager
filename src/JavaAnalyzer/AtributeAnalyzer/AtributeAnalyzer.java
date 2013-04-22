@@ -15,48 +15,48 @@ public class AtributeAnalyzer {
     }
 
     public String scanForAtributes(BufferedReader bufferedFile) throws IOException {
-        String sCadena;
-        while ((sCadena = bufferedFile.readLine()) != null && sCadena.indexOf("{") == -1) {
-            bufferedFile.mark(sCadena.length());
-            isAtribute(sCadena);
+        String line;
+        while ((line = bufferedFile.readLine()) != null && line.indexOf("{") == -1) {
+            bufferedFile.mark(line.length());
+            isAtribute(line);
             fileParameters.increaseLineNumber();
         }
-        return sCadena;
+        return line;
     }
 
-    private void isAtribute(String sCadena) {
-        if (isPublicAtribute(sCadena)) {
+    private void isAtribute(String line) {
+        if (isPublicAtribute(line)) {
             atributeStats.increasePublicAtributes();
         }
-        if (isProtectedAtribute(sCadena)) {
+        if (isProtectedAtribute(line)) {
             atributeStats.increaseProtectedAtributes();
         }
-        if (isPrivateAtribute(sCadena)) {
+        if (isPrivateAtribute(line)) {
             atributeStats.increasePrivateAtributes();
         }
     }
 
-    private boolean isPrivateAtribute(String sCadena) {      
-        if ((sCadena.contains("private "))
-                && (sCadena.endsWith(";")) && (!sCadena.endsWith(");"))) {
+    private boolean isPrivateAtribute(String line) {      
+        if ((line.contains("private "))
+                && (line.endsWith(";")) && (!line.endsWith(");"))) {
             fileParameters.increaseAtributeNumber();
             return true;
         }
         return false;
     }
 
-    private boolean isProtectedAtribute(String sCadena) {
-        if ((sCadena.contains("protected "))
-                && (sCadena.endsWith(";")) && (!sCadena.endsWith(");"))) {
+    private boolean isProtectedAtribute(String line) {
+        if ((line.contains("protected "))
+                && (line.endsWith(";")) && (!line.endsWith(");"))) {
             fileParameters.increaseAtributeNumber();
             return true;
         }
         return false;
     }
 
-    private boolean isPublicAtribute(String sCadena) {
-        if ((sCadena.contains("public "))
-                && (sCadena.endsWith(";")) && (!sCadena.endsWith(");"))) {
+    private boolean isPublicAtribute(String line) {
+        if ((line.contains("public "))
+                && (line.endsWith(";")) && (!line.endsWith(");"))) {
             fileParameters.increaseAtributeNumber();
             return true;
         }
