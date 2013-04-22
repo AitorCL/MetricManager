@@ -49,14 +49,14 @@ public class MethodStats {
     }
 
     public void cyclomaticComplexitySearch(String sCadena) {
-        if (sCadena.indexOf("if") != -1
-                || sCadena.indexOf("while") != -1
-                || sCadena.indexOf("for") != -1
-                || sCadena.indexOf("foreach") != -1
-                || sCadena.indexOf("case") != -1
-                || sCadena.indexOf("default") != -1
-                || sCadena.indexOf("continue") != -1
-                || sCadena.indexOf("catch") != -1) {
+        if (sCadena.contains("if")
+                || sCadena.contains("while")
+                || sCadena.contains("for")
+                || sCadena.contains("foreach")
+                || sCadena.contains("case")
+                || sCadena.contains("default")
+                || sCadena.contains("continue")
+                || sCadena.contains("catch")) {
             increaseCyclomaticComplexity();
             findLogicOperatorForComplexity(sCadena, "||");
             findLogicOperatorForComplexity(sCadena, "&&");

@@ -16,7 +16,7 @@ public class MethodAnalyzer {
     public String scanForMethods(BufferedReader bufferedFile) throws IOException {
         String sCadena = bufferedFile.readLine();
         fileParameters.getLineNumber();
-        while ((sCadena) != null && sCadena.indexOf("public class ") == -1) {
+        while ((sCadena) != null && !sCadena.contains("public class ")) {
             isMethod(sCadena);
             sCadena = nextLine(sCadena, bufferedFile);
         }
@@ -24,12 +24,12 @@ public class MethodAnalyzer {
     }
 
     private void isMethod(String sCadena) {
-        if (sCadena.indexOf("public ") != -1 || sCadena.indexOf("private ") != -1
-                || sCadena.indexOf("protected ") != -1) {
+        if (sCadena.contains("public ") || sCadena.contains("private ")
+                || sCadena.contains("protected ")) {
             if (sCadena.endsWith(");")) {
                 System.out.println(sCadena + ("interface method"));
             } else {
-                if (sCadena.indexOf("){") != -1) {
+                if (sCadena.contains("){")) {
                     showMethodStats();
                     fileParameters.increaseMethodNumber();
                     methodStats = new MethodStats();
@@ -48,12 +48,12 @@ public class MethodAnalyzer {
             bufferedFile.mark(sCadena.length());
             fileParameters.increaseLineNumber();
             methodStats.cyclomaticComplexitySearch(sCadena);
-            if (sCadena.indexOf("{") != -1 && sCadena.indexOf("public ") == -1) {
+            if (sCadena.contains("{") && !sCadena.contains("public ")) {
                 methodStats.increaseMethodBracers();
             }
             if (methodStats.getMethodBracers() != 0) {
                 methodStats.increaseLineNumber();
-                if (sCadena.indexOf("}") != -1) {
+                if (sCadena.contains("}")) {
                     methodStats.decreaseMethodBracers();
                 }
             }
@@ -68,7 +68,7 @@ public class MethodAnalyzer {
     }
 
     private void searchParameters(String sCadena) {
-        if (sCadena.indexOf("()") != -1) {
+        if (sCadena.contains("()")) {
             return;
         }
         while (sCadena.indexOf(",") > -1) {

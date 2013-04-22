@@ -36,8 +36,8 @@ public class AtributeAnalyzer {
         }
     }
 
-    private boolean isPrivateAtribute(String sCadena) {
-        if ((sCadena.indexOf("private ") != -1)
+    private boolean isPrivateAtribute(String sCadena) {      
+        if ((sCadena.contains("private "))
                 && (sCadena.endsWith(";")) && (!sCadena.endsWith(");"))) {
             fileParameters.increaseAtributeNumber();
             return true;
@@ -46,7 +46,7 @@ public class AtributeAnalyzer {
     }
 
     private boolean isProtectedAtribute(String sCadena) {
-        if ((sCadena.indexOf("protected ") != -1)
+        if ((sCadena.contains("protected "))
                 && (sCadena.endsWith(";")) && (!sCadena.endsWith(");"))) {
             fileParameters.increaseAtributeNumber();
             return true;
@@ -55,7 +55,7 @@ public class AtributeAnalyzer {
     }
 
     private boolean isPublicAtribute(String sCadena) {
-        if ((sCadena.indexOf("public ") != -1)
+        if ((sCadena.contains("public "))
                 && (sCadena.endsWith(";")) && (!sCadena.endsWith(");"))) {
             fileParameters.increaseAtributeNumber();
             return true;

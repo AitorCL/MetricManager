@@ -16,7 +16,7 @@ public class ImportAnalyzer {
 
     public void scanForImports(BufferedReader bufferedFile) throws IOException {
         String sCadena;
-        while ((sCadena = bufferedFile.readLine()) != null && sCadena.indexOf("public") == -1) {
+        while ((sCadena = bufferedFile.readLine()) != null && !sCadena.contains("public ")) {
             bufferedFile.mark(sCadena.length());
             isImport(sCadena);
             fileParameters.increaseLineNumber();
@@ -24,9 +24,9 @@ public class ImportAnalyzer {
     }
 
     public void isImport(String String) {
-        if (String.indexOf("import ") != -1) {
+        if (String.contains("import ")) {
             fileParameters.increaseImportNumber();
-            if (String.indexOf("java.") != -1) {
+            if (String.contains("java.")) {
                 importStats.increaseJavaImports();
             } else {
                 importStats.increaseOtherImports();

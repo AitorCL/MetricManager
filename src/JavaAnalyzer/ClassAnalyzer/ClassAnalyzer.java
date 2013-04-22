@@ -17,7 +17,7 @@ public class ClassAnalyzer {
     public boolean scanForClasses(BufferedReader bufferedFile) throws IOException {
         String sCadena;
         if ((sCadena = bufferedFile.readLine()) != null) {
-            if (sCadena.indexOf("public class") != -1) {
+            if (sCadena.contains("public class ")) {
                 classStats.setClassName(sCadena);
                 fileParameters.increaseClassNumber();
                 fileParameters.increaseLineNumber();
