@@ -21,8 +21,8 @@ public class JavaAnalyzer extends Analyzer {
     public void scanFile(File file) throws FileNotFoundException, IOException {
         BufferedReader bufferedFile = getFileBuffer(file);
         startScan(bufferedFile, file);
+        fileParameters.writeStats();
         fileParameters.getPrintWriter().close();
-        //fileStats(file);
     }
 
     private BufferedReader getFileBuffer(File file) throws FileNotFoundException, IOException {

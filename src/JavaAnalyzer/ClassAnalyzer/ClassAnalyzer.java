@@ -1,5 +1,6 @@
 package JavaAnalyzer.ClassAnalyzer;
 
+import JavaAnalyzer.CommentAnalyzer.CommentAnalyzer;
 import JavaAnalyzer.FileParameters;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,14 +17,19 @@ public class ClassAnalyzer {
 
     public boolean scanForClasses(BufferedReader bufferedFile) throws IOException {
         String line;
-        if ((line = bufferedFile.readLine()) != null) {
-            if (line.contains("public class ")) {
-                classStats.setClassName(line);
-                fileParameters.increaseClassNumber();
-                fileParameters.increaseLineNumber();
-                return true;
+         CommentAnalyzer commentAnalyzer = new CommentAnalyzer(fileParameters);
+           while ((line = bufferedFile.readLine()) != null) {
+                if (line.contains("public class ")) {
+                    classStats.setClassName(line);
+                    fileParameters.increaseClassNumber();
+                    fileParameters.increaseLineNumber();
+                    return true;
+                }
+                else
+                {
+                    commentAnalyzer.searchComment(line);
+                }
             }
-        }
         return false;
     }
     

@@ -57,8 +57,8 @@ public class FileParameters {
 
     public void increasecommentLinesNumber() {
         commentLinesNumber++;
-    }    
-    
+    }
+
     public void increaseClassNumber() {
         classNumber++;
     }
@@ -97,5 +97,16 @@ public class FileParameters {
 
     public int getLineNumber() {
         return lineNumber;
+    }
+
+    public void writeStats() {
+        printWriter.println("File review:");
+        printWriter.println(" Import Number: " + importNumber);
+        printWriter.println(" Class Number: " + classNumber);
+        printWriter.println("   Atribute Number:" + atributeNumber);
+        printWriter.println("   Method Number:" + methodNumber);
+        printWriter.println("Comentary Lines :"+commentLinesNumber);
+        printWriter.println("Total lines :"+lineNumber);
+
     }
 }

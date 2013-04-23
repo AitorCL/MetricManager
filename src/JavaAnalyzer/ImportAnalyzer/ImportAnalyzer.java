@@ -1,5 +1,6 @@
 package JavaAnalyzer.ImportAnalyzer;
 
+import JavaAnalyzer.CommentAnalyzer.CommentAnalyzer;
 import JavaAnalyzer.FileParameters;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,9 +17,11 @@ public class ImportAnalyzer {
 
     public void scanForImports(BufferedReader bufferedFile) throws IOException {
         String line;
+        CommentAnalyzer commentAnalyzer = new CommentAnalyzer(fileParameters);
         while ((line = bufferedFile.readLine()) != null && !line.contains("public ")) {
             bufferedFile.mark(line.length());
             isImport(line);
+            commentAnalyzer.searchComment(line);
             fileParameters.increaseLineNumber();
         }
     }

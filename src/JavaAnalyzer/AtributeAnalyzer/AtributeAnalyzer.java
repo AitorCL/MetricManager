@@ -1,5 +1,6 @@
 package JavaAnalyzer.AtributeAnalyzer;
 
+import JavaAnalyzer.CommentAnalyzer.CommentAnalyzer;
 import JavaAnalyzer.FileParameters;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,9 +17,11 @@ public class AtributeAnalyzer {
 
     public String scanForAtributes(BufferedReader bufferedFile) throws IOException {
         String line;
+        CommentAnalyzer commentAnalyzer = new CommentAnalyzer(fileParameters);
         while ((line = bufferedFile.readLine()) != null && line.indexOf("{") == -1) {
             bufferedFile.mark(line.length());
             isAtribute(line);
+            commentAnalyzer.searchComment(line);
             fileParameters.increaseLineNumber();
         }
         return line;

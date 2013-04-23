@@ -1,5 +1,6 @@
 package JavaAnalyzer.MethodAnalyzer;
 
+import JavaAnalyzer.CommentAnalyzer.CommentAnalyzer;
 import JavaAnalyzer.FileParameters;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,15 +10,36 @@ public class MethodAnalyzer {
     private FileParameters fileParameters;
     private MethodStats methodStats;
 
+    
     public MethodAnalyzer(FileParameters fileParameters) {
         this.fileParameters = fileParameters;
+        
     }
+
+    public FileParameters getFileParameters() {
+        return fileParameters;
+    }
+
+    public void setFileParameters(FileParameters fileParameters) {
+        this.fileParameters = fileParameters;
+    }
+
+    public MethodStats getMethodStats() {
+        return methodStats;
+    }
+
+    public void setMethodStats(MethodStats methodStats) {
+        this.methodStats = methodStats;
+    }
+
 
     public String scanForMethods(BufferedReader bufferedFile) throws IOException {
         String line = bufferedFile.readLine();
         fileParameters.getLineNumber();
+        CommentAnalyzer commentAnalyzer = new CommentAnalyzer(fileParameters);
         while ((line) != null && !line.contains("public class ")) {
             isMethod(line);
+            commentAnalyzer.searchComment(line);
             line = nextLine(line, bufferedFile);
         }
         return line;
@@ -29,7 +51,7 @@ public class MethodAnalyzer {
             if (line.endsWith(");")) {
                 System.out.println(line + ("interface method"));
             } else {
-                if (line.contains("){")) {
+                if (line.contains(") {") || line.contains("){") ) {
                     showMethodStats();
                     fileParameters.increaseMethodNumber();
                     methodStats = new MethodStats();
