@@ -1,19 +1,21 @@
 package JavaAnalyzer.MethodAnalyzer;
 
+import JavaAnalyzer.ClassAnalyzer.ClassStats;
 import JavaAnalyzer.CommentAnalyzer.CommentAnalyzer;
 import JavaAnalyzer.FileParameters;
 import java.io.BufferedReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 public class MethodAnalyzer {
 
     private FileParameters fileParameters;
     private MethodStats methodStats;
 
-    
     public MethodAnalyzer(FileParameters fileParameters) {
         this.fileParameters = fileParameters;
-        
+
     }
 
     public FileParameters getFileParameters() {
@@ -32,7 +34,6 @@ public class MethodAnalyzer {
         this.methodStats = methodStats;
     }
 
-
     public String scanForMethods(BufferedReader bufferedFile) throws IOException {
         String line = bufferedFile.readLine();
         fileParameters.getLineNumber();
@@ -45,14 +46,15 @@ public class MethodAnalyzer {
         return line;
     }
 
-    private void isMethod(String line) {
+    private void isMethod(String line) throws IOException {
         if (line.contains("public ") || line.contains("private ")
                 || line.contains("protected ")) {
             if (line.endsWith(");")) {
                 System.out.println(line + ("interface method"));
             } else {
-                if (line.contains(") {") || line.contains("){") ) {
+                if (line.contains(") {") || line.contains("){")) {
                     showMethodStats();
+                    testAppend();
                     fileParameters.increaseMethodNumber();
                     methodStats = new MethodStats();
                     methodStats.setMethodName(line);
@@ -87,6 +89,17 @@ public class MethodAnalyzer {
         if (methodStats != null) {
             methodStats.writeStats(fileParameters.getPrintWriter());
         }
+    }
+
+    public void testAppend() throws IOException {
+        String sFichero = ("c:/ParseTest/Method_log.txt");
+        FileWriter fileLog = new FileWriter(sFichero,true);
+        PrintWriter printWriter = new PrintWriter(fileLog, true);
+        if (methodStats != null) {
+            methodStats.testAppendWrite(printWriter);
+        }
+        printWriter.close();
+        
     }
 
     private void searchParameters(String line) {

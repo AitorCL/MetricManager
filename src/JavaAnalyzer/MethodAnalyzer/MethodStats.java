@@ -31,7 +31,7 @@ public class MethodStats {
     }
 
     public void setMethodName(String methodName) {
-        this.methodName = methodName;
+        this.methodName = methodName.substring(methodName.indexOf("p"),methodName.indexOf("("));
     }
 
     public void increaseParamNumber() {
@@ -79,4 +79,12 @@ public class MethodStats {
         printWriter.println("   CyclomaticComplexity    :" + cyclomaticComplexity);
         printWriter.println("");
     }
+    public void testAppendWrite(PrintWriter printWriter) {
+        printWriter.append("     Method: " +methodName +", ");
+        printWriter.append("Params: " +paramNumber+", ");
+        printWriter.append("Lines: " +lineNumber+", ");
+        printWriter.append("CC: " +cyclomaticComplexity+"\r\n");
+        printWriter.append("");    
+    }    
+    
 }

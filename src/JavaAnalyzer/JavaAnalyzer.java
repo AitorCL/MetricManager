@@ -57,7 +57,8 @@ public class JavaAnalyzer extends Analyzer {
     private void findClasses(BufferedReader bufferedFile) throws IOException {
         ClassAnalyzer classAnalyzer = new ClassAnalyzer(fileParameters);
         if (classAnalyzer.scanForClasses(bufferedFile)) {
-            classAnalyzer.showClassStats();
+            //classAnalyzer.showClassStats();
+            classAnalyzer.testAppend();
             findAtributes(bufferedFile);
             findMethods(bufferedFile);
             findClasses(bufferedFile);
@@ -75,6 +76,8 @@ public class JavaAnalyzer extends Analyzer {
         MethodAnalyzer methodAnalyzer = new MethodAnalyzer(fileParameters);
         moveBufferToMark(methodAnalyzer.scanForMethods(bufferedFile), bufferedFile);
         methodAnalyzer.showMethodStats();
+        //nueivo!!!!!
+        methodAnalyzer.testAppend();
     }
 
     private boolean moveBufferToMark(BufferedReader bufferedFile) throws IOException {

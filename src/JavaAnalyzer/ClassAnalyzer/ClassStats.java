@@ -24,7 +24,14 @@ public class ClassStats {
         printWriter.println("");
         
     }
+    public void testAppendWrite(PrintWriter printWriter) {
+        printWriter.append("Name: "+className+"\r\n");
+        
+    } 
 
+    public String getClassName() {
+        return className;
+    }
     
     
 }
