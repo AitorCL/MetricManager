@@ -1,17 +1,18 @@
 package JavaAnalyzer.ImportAnalyzer;
 
-import JavaAnalyzer.FileParameters;
 import java.io.BufferedReader;
 import java.io.IOException;
 
 public class ImportAnalyzer {
 
-    private FileParameters fileParameters;
     private ImportStats importStats;
 
-    public ImportAnalyzer(FileParameters fileParameters) {
-        this.fileParameters = fileParameters;
+    public ImportAnalyzer() {
         this.importStats = new ImportStats();
+    }
+
+    public ImportStats getImportStats() {
+        return importStats;
     }
 
     public void scanForImports(BufferedReader bufferedFile) throws IOException {
@@ -31,9 +32,5 @@ public class ImportAnalyzer {
             }
 
         }
-    }
-
-    public void showImportStats() {
-        importStats.writeStats(fileParameters.getPrintWriter());
     }
 }

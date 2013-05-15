@@ -5,28 +5,23 @@ import JavaAnalyzer.AtributeAnalyzer.AtributeAnalyzer;
 import JavaAnalyzer.ClassAnalyzer.ClassAnalyzer;
 import JavaAnalyzer.ClassAnalyzer.ClassStats;
 import JavaAnalyzer.ImportAnalyzer.ImportAnalyzer;
+import JavaAnalyzer.ImportAnalyzer.ImportStats;
 import JavaAnalyzer.MethodAnalyzer.MethodAnalyzer;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 public class JavaAnalyzer extends Analyzer {
-
-    private FileParameters fileParameters;
 
     @Override
     public void scanFile(File file) throws FileNotFoundException, IOException {
         BufferedReader bufferedFile = getFileBuffer(file);
         startScan(bufferedFile, file);
-        fileParameters.getPrintWriter().close();
     }
 
     private BufferedReader getFileBuffer(File file) throws FileNotFoundException, IOException {
-        fileParameters = new FileParameters(createLogFile(file));
         BufferedReader bufferedFile = new BufferedReader(new FileReader(file));
         return bufferedFile;
     }
@@ -39,14 +34,13 @@ public class JavaAnalyzer extends Analyzer {
     }
 
     private boolean findImports(BufferedReader bufferedFile) throws IOException {
-        ImportAnalyzer importAnalyzer = new ImportAnalyzer(fileParameters);
+        ImportAnalyzer importAnalyzer = new ImportAnalyzer();
         importAnalyzer.scanForImports(bufferedFile);
-        importAnalyzer.showImportStats();
-        return moveBufferToMark(bufferedFile);
+        return moveBufferToMark(bufferedFile,importAnalyzer.getImportStats());
     }
 
     private void findClasses(BufferedReader bufferedFile) throws IOException {
-        ClassAnalyzer classAnalyzer = new ClassAnalyzer(fileParameters);
+        ClassAnalyzer classAnalyzer = new ClassAnalyzer();
         if (classAnalyzer.scanForClasses(bufferedFile)) {
             classAnalyzer.prepareMethodStatsFile();
             findAtributes(bufferedFile,classAnalyzer.getClassStats());
@@ -62,13 +56,13 @@ public class JavaAnalyzer extends Analyzer {
     }
 
     private void findMethods(BufferedReader bufferedFile,ClassStats classStats) throws IOException {
-        MethodAnalyzer methodAnalyzer = new MethodAnalyzer(fileParameters,classStats);
+        MethodAnalyzer methodAnalyzer = new MethodAnalyzer(classStats);
         moveBufferToMark(methodAnalyzer.scanForMethods(bufferedFile), bufferedFile);
         methodAnalyzer.writeMethodStats();
     }
 
-    private boolean moveBufferToMark(BufferedReader bufferedFile) throws IOException {
-        if (fileParameters.getImportNumber() != 0) {
+    private boolean moveBufferToMark(BufferedReader bufferedFile,ImportStats importStat) throws IOException {
+        if (importStat.getTotalImports() != 0) {
             bufferedFile.reset();
             return true;
         }
@@ -81,10 +75,4 @@ public class JavaAnalyzer extends Analyzer {
         }
     }
 
-    private PrintWriter createLogFile(File file) throws IOException {
-        String sFichero = ("c:/ParseTest/" + showFileName(file) + "_log.txt");
-        FileWriter fileLog = new FileWriter(sFichero);
-        PrintWriter printWriter = new PrintWriter(fileLog, true);
-        return printWriter;
-    }
 }

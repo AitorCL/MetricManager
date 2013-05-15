@@ -2,7 +2,6 @@ package JavaAnalyzer.MethodAnalyzer;
 
 import JavaAnalyzer.ClassAnalyzer.ClassStats;
 import JavaAnalyzer.CommentAnalyzer.CommentAnalyzer;
-import JavaAnalyzer.FileParameters;
 import java.io.BufferedReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -10,21 +9,11 @@ import java.io.PrintWriter;
 
 public class MethodAnalyzer {
 
-    private FileParameters fileParameters;
     private ClassStats classStats;
     private MethodStats methodStats;
 
-    public MethodAnalyzer(FileParameters fileParameters,ClassStats classStats) {
-        this.fileParameters = fileParameters;
+    public MethodAnalyzer(ClassStats classStats) {
         this.classStats = classStats;
-    }
-
-    public FileParameters getFileParameters() {
-        return fileParameters;
-    }
-
-    public void setFileParameters(FileParameters fileParameters) {
-        this.fileParameters = fileParameters;
     }
 
     public MethodStats getMethodStats() {

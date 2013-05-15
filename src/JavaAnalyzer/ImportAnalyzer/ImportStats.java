@@ -1,15 +1,15 @@
 package JavaAnalyzer.ImportAnalyzer;
 
-import java.io.PrintWriter;
-
 public class ImportStats {
 
     private int javaImports;
     private int otherImports;
+    private int totalImports;
 
     public ImportStats() {
         this.javaImports = 0;
         this.otherImports = 0;
+        this.totalImports = 0;
     }
 
     public int getJavaImports() {
@@ -20,18 +20,18 @@ public class ImportStats {
         return otherImports;
     }
 
-    public void increaseJavaImports() {
+    public int getTotalImports() {
+        return totalImports;
+    }
+    
+   public void increaseJavaImports() {
         this.javaImports++;
+        this.totalImports++;
     }
 
     public void increaseOtherImports() {
         this.otherImports++;
+        this.totalImports++;
     }
 
-    public void writeStats(PrintWriter printWriter) {
-        printWriter.println("Imports:");
-        printWriter.println("   Java   : " + javaImports);
-        printWriter.println("   Other  : " + otherImports);
-        printWriter.println("");
-    }
 }
