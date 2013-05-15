@@ -7,6 +7,7 @@ public class MethodStats {
     private String methodName;
     private int paramNumber;
     private int lineNumber;
+    private int commentLines;
     private int cyclomaticComplexity;
     private int methodBracers;
 
@@ -22,6 +23,10 @@ public class MethodStats {
         return methodBracers;
     }
 
+    public void increaseCommentLines() {
+        this.commentLines++;
+    }
+    
     public void increaseMethodBracers() {
         this.methodBracers++;
     }
@@ -31,7 +36,7 @@ public class MethodStats {
     }
 
     public void setMethodName(String methodName) {
-        this.methodName = methodName.substring(methodName.indexOf("p"),methodName.indexOf("("));
+        this.methodName = methodName.substring(methodName.indexOf("p"), methodName.indexOf("("));
     }
 
     public void increaseParamNumber() {
@@ -49,20 +54,27 @@ public class MethodStats {
     }
 
     public void cyclomaticComplexitySearch(String line) {
-        if (line.contains("if")
+        if (containReserveWord(line)) {
+            increaseCyclomaticComplexity();
+            searchForComplexityOperators(line);
+        }
+    }
+    
+    public boolean containReserveWord(String line) {
+        return line.contains("if")
                 || line.contains("while")
                 || line.contains("for")
                 || line.contains("foreach")
                 || line.contains("case")
                 || line.contains("default")
                 || line.contains("continue")
-                || line.contains("catch")) {
-            increaseCyclomaticComplexity();
-            findLogicOperatorForComplexity(line, "||");
-            findLogicOperatorForComplexity(line, "&&");
-            findLogicOperatorForComplexity(line, "?");
+                || line.contains("catch");
+    }
 
-        }
+    public void searchForComplexityOperators(String line) {
+        findLogicOperatorForComplexity(line, "||");
+        findLogicOperatorForComplexity(line, "&&");
+        findLogicOperatorForComplexity(line, "?");
     }
 
     private void findLogicOperatorForComplexity(String line, String sKey) {
@@ -73,18 +85,10 @@ public class MethodStats {
     }
 
     public void writeStats(PrintWriter printWriter) {
-        printWriter.println("Method : " + methodName);
-        printWriter.println("   Parameters              :" + paramNumber);
-        printWriter.println("   Lines                   :" + lineNumber);
-        printWriter.println("   CyclomaticComplexity    :" + cyclomaticComplexity);
-        printWriter.println("");
+        printWriter.append("     Method: " + methodName + ", ");
+        printWriter.append("Params: " + paramNumber + ", ");
+        printWriter.append("Lines: " + lineNumber + ", ");
+        printWriter.append("CC: " + cyclomaticComplexity + "\r\n");
+        printWriter.append("");
     }
-    public void testAppendWrite(PrintWriter printWriter) {
-        printWriter.append("     Method: " +methodName +", ");
-        printWriter.append("Params: " +paramNumber+", ");
-        printWriter.append("Lines: " +lineNumber+", ");
-        printWriter.append("CC: " +cyclomaticComplexity+"\r\n");
-        printWriter.append("");    
-    }    
-    
 }

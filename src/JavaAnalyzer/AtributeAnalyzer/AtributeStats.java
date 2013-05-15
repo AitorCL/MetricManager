@@ -7,6 +7,7 @@ public class AtributeStats {
     private int publicAtributes;
     private int protectedAtributes;
     private int privateAtributes;
+    private int totalAtributes;
 
     public AtributeStats() {
         this.publicAtributes = 0;
@@ -28,14 +29,21 @@ public class AtributeStats {
 
     public void increasePublicAtributes() {
         this.publicAtributes++;
+        this.totalAtributes++;
     }
 
     public void increaseProtectedAtributes() {
         this.protectedAtributes++;
+        this.totalAtributes++;
     }
 
     public void increasePrivateAtributes() {
         this.privateAtributes++;
+        this.totalAtributes++;
+    }
+
+    public void increaseTotalAtributes() {
+        this.totalAtributes++;
     }
 
     public void writeStats(PrintWriter printWriter) {

@@ -11,11 +11,12 @@ import java.io.PrintWriter;
 public class MethodAnalyzer {
 
     private FileParameters fileParameters;
+    private ClassStats classStats;
     private MethodStats methodStats;
 
-    public MethodAnalyzer(FileParameters fileParameters) {
+    public MethodAnalyzer(FileParameters fileParameters,ClassStats classStats) {
         this.fileParameters = fileParameters;
-
+        this.classStats = classStats;
     }
 
     public FileParameters getFileParameters() {
@@ -36,8 +37,8 @@ public class MethodAnalyzer {
 
     public String scanForMethods(BufferedReader bufferedFile) throws IOException {
         String line = bufferedFile.readLine();
-        fileParameters.getLineNumber();
-        CommentAnalyzer commentAnalyzer = new CommentAnalyzer(fileParameters);
+        classStats.increaseClassLines();
+        CommentAnalyzer commentAnalyzer = new CommentAnalyzer(classStats);
         while ((line) != null && !line.contains("public class ")) {
             isMethod(line);
             commentAnalyzer.searchComment(line);
@@ -53,13 +54,13 @@ public class MethodAnalyzer {
                 System.out.println(line + ("interface method"));
             } else {
                 if (line.contains(") {") || line.contains("){")) {
-                    showMethodStats();
-                    testAppend();
-                    fileParameters.increaseMethodNumber();
+                    writeMethodStats();
+                    classStats.increaseMethods();
                     methodStats = new MethodStats();
                     methodStats.setMethodName(line);
                     methodStats.increaseMethodBracers();
                     methodStats.increaseLineNumber();
+                    classStats.increaseClassLines();
                     searchParameters(line);
                 }
             }
@@ -70,7 +71,7 @@ public class MethodAnalyzer {
         line = bufferedFile.readLine();
         if (line != null) {
             bufferedFile.mark(line.length());
-            fileParameters.increaseLineNumber();
+            classStats.increaseClassLines();
             methodStats.cyclomaticComplexitySearch(line);
             if (line.contains("{") && !line.contains("public ")) {
                 methodStats.increaseMethodBracers();
@@ -85,18 +86,12 @@ public class MethodAnalyzer {
         return line;
     }
 
-    public void showMethodStats() {
-        if (methodStats != null) {
-            methodStats.writeStats(fileParameters.getPrintWriter());
-        }
-    }
-
-    public void testAppend() throws IOException {
+    public void writeMethodStats() throws IOException {
         String sFichero = ("c:/ParseTest/Method_log.txt");
         FileWriter fileLog = new FileWriter(sFichero,true);
         PrintWriter printWriter = new PrintWriter(fileLog, true);
         if (methodStats != null) {
-            methodStats.testAppendWrite(printWriter);
+            methodStats.writeStats(printWriter);
         }
         printWriter.close();
         

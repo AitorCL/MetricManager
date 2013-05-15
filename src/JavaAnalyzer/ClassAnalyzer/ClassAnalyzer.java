@@ -17,14 +17,18 @@ public class ClassAnalyzer {
         this.classStats = new ClassStats();
     }
 
+    public ClassStats getClassStats() {
+        return classStats;
+    }
+
+    
     public boolean scanForClasses(BufferedReader bufferedFile) throws IOException {
         String line;
-         CommentAnalyzer commentAnalyzer = new CommentAnalyzer(fileParameters);
+         CommentAnalyzer commentAnalyzer = new CommentAnalyzer(classStats);
            while ((line = bufferedFile.readLine()) != null) {
                 if (line.contains("public class ")) {
                     classStats.setClassName(line);
-                    fileParameters.increaseClassNumber();
-                    fileParameters.increaseLineNumber();
+                    classStats.increaseClassLines();
                     return true;
                 }
                 else
@@ -39,22 +43,20 @@ public class ClassAnalyzer {
         classStats.writeStats(fileParameters.getPrintWriter());
     }
     
-    public void testAppend() throws IOException {
+    public void writeClassStats() throws IOException {
         String sFichero = ("c:/ParseTest/Class_log.txt");
         FileWriter fileLog = new FileWriter(sFichero, true);
         PrintWriter printWriter = new PrintWriter(fileLog, true);
         if (classStats != null) {
-            classStats.testAppendWrite(printWriter);
+            classStats.writeStats(printWriter);
         }
         printWriter.close();
-        prepareMethodStatsFile();
     }
-    private void prepareMethodStatsFile() throws IOException{
+    public void prepareMethodStatsFile() throws IOException{
         String sFichero = ("c:/ParseTest/Method_log.txt");
         FileWriter fileLog = new FileWriter(sFichero,true);
         PrintWriter printWriter = new PrintWriter(fileLog, true);
         printWriter.append("Name: "+classStats.getClassName()+"\r\n");
-        printWriter.append("Method Name,Parameters,Lines,CC"+"\r\n");
         printWriter.close();
     }
 }

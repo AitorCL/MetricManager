@@ -3,6 +3,7 @@ package JavaAnalyzer;
 import Analyzers.Analyzer;
 import JavaAnalyzer.AtributeAnalyzer.AtributeAnalyzer;
 import JavaAnalyzer.ClassAnalyzer.ClassAnalyzer;
+import JavaAnalyzer.ClassAnalyzer.ClassStats;
 import JavaAnalyzer.ImportAnalyzer.ImportAnalyzer;
 import JavaAnalyzer.MethodAnalyzer.MethodAnalyzer;
 import java.io.BufferedReader;
@@ -21,7 +22,6 @@ public class JavaAnalyzer extends Analyzer {
     public void scanFile(File file) throws FileNotFoundException, IOException {
         BufferedReader bufferedFile = getFileBuffer(file);
         startScan(bufferedFile, file);
-        fileParameters.writeStats();
         fileParameters.getPrintWriter().close();
     }
 
@@ -38,15 +38,6 @@ public class JavaAnalyzer extends Analyzer {
         findClasses(bufferedFile);
     }
 
-    public void fileStats(File file) throws IOException {
-        try (PrintWriter printWriter = createLogFile(file)) {
-            importStats(printWriter);
-            classStats(printWriter);
-            printWriter.println("   File lines:" + fileParameters.getLineNumber());
-            printWriter.close();
-        }
-    }
-
     private boolean findImports(BufferedReader bufferedFile) throws IOException {
         ImportAnalyzer importAnalyzer = new ImportAnalyzer(fileParameters);
         importAnalyzer.scanForImports(bufferedFile);
@@ -57,27 +48,23 @@ public class JavaAnalyzer extends Analyzer {
     private void findClasses(BufferedReader bufferedFile) throws IOException {
         ClassAnalyzer classAnalyzer = new ClassAnalyzer(fileParameters);
         if (classAnalyzer.scanForClasses(bufferedFile)) {
-            //classAnalyzer.showClassStats();
-            classAnalyzer.testAppend();
-            findAtributes(bufferedFile);
-            findMethods(bufferedFile);
+            classAnalyzer.prepareMethodStatsFile();
+            findAtributes(bufferedFile,classAnalyzer.getClassStats());
+            findMethods(bufferedFile,classAnalyzer.getClassStats());
+            classAnalyzer.writeClassStats();
             findClasses(bufferedFile);
         }
     }
 
-    private void findAtributes(BufferedReader bufferedFile) throws IOException {
-        AtributeAnalyzer atributeAnalyzer = new AtributeAnalyzer(fileParameters);
+    private void findAtributes(BufferedReader bufferedFile,ClassStats classStats) throws IOException {
+        AtributeAnalyzer atributeAnalyzer = new AtributeAnalyzer(classStats);
         moveBufferToMark(atributeAnalyzer.scanForAtributes(bufferedFile), bufferedFile);
-        atributeAnalyzer.showAtributetStats();
-
     }
 
-    private void findMethods(BufferedReader bufferedFile) throws IOException {
-        MethodAnalyzer methodAnalyzer = new MethodAnalyzer(fileParameters);
+    private void findMethods(BufferedReader bufferedFile,ClassStats classStats) throws IOException {
+        MethodAnalyzer methodAnalyzer = new MethodAnalyzer(fileParameters,classStats);
         moveBufferToMark(methodAnalyzer.scanForMethods(bufferedFile), bufferedFile);
-        methodAnalyzer.showMethodStats();
-        //nueivo!!!!!
-        methodAnalyzer.testAppend();
+        methodAnalyzer.writeMethodStats();
     }
 
     private boolean moveBufferToMark(BufferedReader bufferedFile) throws IOException {
@@ -92,24 +79,6 @@ public class JavaAnalyzer extends Analyzer {
         if (line != null) {
             bufferedFile.reset();
         }
-    }
-
-    private void importStats(PrintWriter printWriter) {
-        printWriter.println("   Imports: " + fileParameters.getImportNumber());
-    }
-
-    private void classStats(PrintWriter printWriter) {
-        printWriter.println("   Class :" + fileParameters.getClassNumber());
-        atributerStats(printWriter);
-        methodStats(printWriter);
-    }
-
-    private void atributerStats(PrintWriter printWriter) {
-        printWriter.println("     Class atributes :" + fileParameters.getAtributeNumber());
-    }
-
-    private void methodStats(PrintWriter printWriter) {
-        printWriter.println("     Class methods :" + fileParameters.getMethodNumber());
     }
 
     private PrintWriter createLogFile(File file) throws IOException {

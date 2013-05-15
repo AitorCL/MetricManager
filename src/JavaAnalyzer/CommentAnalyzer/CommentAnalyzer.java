@@ -1,37 +1,37 @@
 package JavaAnalyzer.CommentAnalyzer;
 
-import JavaAnalyzer.FileParameters;
+import JavaAnalyzer.ClassAnalyzer.ClassStats;
 
 public class CommentAnalyzer {
 
     private boolean openCommentary;
-    private FileParameters fileParameters;
+    private ClassStats classStats;
 
-    public CommentAnalyzer(FileParameters fileparameters) {
+    public CommentAnalyzer(ClassStats classStats) {
         this.openCommentary = false;
-        this.fileParameters = fileparameters;
+        this.classStats = classStats;
     }
 
     public void searchComment(String line) {
         if (line.contains("//")) {
-            fileParameters.increasecommentLinesNumber();
+            classStats.increaseCommentLines();
             return;
         }
         if (line.contains("/*") && line.contains("*/")) {
-            fileParameters.increasecommentLinesNumber();
+            classStats.increaseCommentLines();
             return;
         }
         if (line.contains("/*")) {
-            fileParameters.increasecommentLinesNumber();
+            classStats.increaseCommentLines();
             openCommentary = true;
             return;
         }
         if (openCommentary) {
-            fileParameters.increasecommentLinesNumber();
+            classStats.increaseCommentLines();
             return;
         }
         if (line.contains("*/")) {
-            fileParameters.increasecommentLinesNumber();
+            classStats.increaseCommentLines();
             openCommentary = false;
         }
     }
