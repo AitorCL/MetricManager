@@ -5,6 +5,7 @@ import java.io.BufferedReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 
 public class ClassAnalyzer {
 
@@ -47,6 +48,8 @@ public class ClassAnalyzer {
         String sFichero = ("c:/ParseTest/Method_log.txt");
         FileWriter fileLog = new FileWriter(sFichero, true);
         PrintWriter printWriter = new PrintWriter(fileLog, true);
+        Date fecha = new Date();
+        printWriter.append("[" + fecha + "]" + "\r\n");
         printWriter.append("Name: " + classStats.getClassName() + "\r\n");
         printWriter.close();
     }

@@ -1,4 +1,3 @@
-
 package CodeForTest;
 
 public class FileForTest {

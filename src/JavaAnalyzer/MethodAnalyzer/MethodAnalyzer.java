@@ -77,13 +77,13 @@ public class MethodAnalyzer {
 
     public void writeMethodStats() throws IOException {
         String sFichero = ("c:/ParseTest/Method_log.txt");
-        FileWriter fileLog = new FileWriter(sFichero,true);
+        FileWriter fileLog = new FileWriter(sFichero, true);
         PrintWriter printWriter = new PrintWriter(fileLog, true);
         if (methodStats != null) {
             methodStats.writeStats(printWriter);
         }
         printWriter.close();
-        
+
     }
 
     private void searchParameters(String line) {

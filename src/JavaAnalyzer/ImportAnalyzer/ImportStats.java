@@ -23,8 +23,8 @@ public class ImportStats {
     public int getTotalImports() {
         return totalImports;
     }
-    
-   public void increaseJavaImports() {
+
+    public void increaseJavaImports() {
         this.javaImports++;
         this.totalImports++;
     }
@@ -33,5 +33,4 @@ public class ImportStats {
         this.otherImports++;
         this.totalImports++;
     }
-
 }

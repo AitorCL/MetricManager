@@ -1,6 +1,7 @@
 package JavaAnalyzer.ClassAnalyzer;
 
 import java.io.PrintWriter;
+import java.util.Date;
 
 public class ClassStats {
 
@@ -39,6 +40,8 @@ public class ClassStats {
     }
 
     public void writeStats(PrintWriter printWriter) {
+        Date fecha = new Date();
+        printWriter.append("[" + fecha + "]");
         printWriter.append("Name: " + className + ",");
         printWriter.append("Atributes: " + atributeNumber + ",");
         printWriter.append("Methods: " + methodNumber + ",");

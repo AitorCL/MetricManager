@@ -31,7 +31,7 @@ public class AtributeAnalyzer {
         isPrivateAtribute(line);
     }
 
-    private boolean isPrivateAtribute(String line) {      
+    private boolean isPrivateAtribute(String line) {
         if ((line.contains("private "))
                 && (line.endsWith(";")) && (!line.endsWith(");"))) {
             classStats.increaseAtributes();

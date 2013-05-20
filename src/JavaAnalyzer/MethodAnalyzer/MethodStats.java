@@ -1,6 +1,7 @@
 package JavaAnalyzer.MethodAnalyzer;
 
 import java.io.PrintWriter;
+import java.util.Date;
 
 public class MethodStats {
 
@@ -26,7 +27,7 @@ public class MethodStats {
     public void increaseCommentLines() {
         this.commentLines++;
     }
-    
+
     public void increaseMethodBracers() {
         this.methodBracers++;
     }
@@ -59,7 +60,7 @@ public class MethodStats {
             searchForComplexityOperators(line);
         }
     }
-    
+
     public boolean containReserveWord(String line) {
         return line.contains("if")
                 || line.contains("while")
