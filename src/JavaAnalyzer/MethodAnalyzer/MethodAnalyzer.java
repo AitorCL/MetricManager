@@ -11,6 +11,7 @@ public class MethodAnalyzer {
 
     private ClassStats classStats;
     private MethodStats methodStats;
+    private int bracersNumber;
 
     public MethodAnalyzer(ClassStats classStats) {
         this.classStats = classStats;
@@ -22,6 +23,20 @@ public class MethodAnalyzer {
 
     public void setMethodStats(MethodStats methodStats) {
         this.methodStats = methodStats;
+    }
+
+    private void areThereCloseBracer(String line) {
+        if (line.contains("}")) {
+            decreaseMethodBracer();
+        }
+    }
+
+    private void increaseBracerNumber() {
+        bracersNumber++;
+    }
+
+    private boolean thereAreStats() {
+        return methodStats != null;
     }
 
     public String scanForMethods(BufferedReader bufferedFile) throws IOException {
@@ -37,24 +52,12 @@ public class MethodAnalyzer {
     }
 
     private void isMethod(String line) throws IOException {
-        if (line.contains("public ") || line.contains("private ")
-                || line.contains("protected ")) {
-            if (line.endsWith(");")) {
-                System.out.println(line + ("interface method"));
-            } else {
-                if (line.contains(") {") || line.contains("){")) {
-                    writeMethodStats();
-                    classStats.increaseMethods();
-                    methodStats = new MethodStats();
-                    methodStats.setMethodName(line);
-                    methodStats.increaseMethodBracers();
-                    methodStats.increaseLineNumber();
-                    classStats.increaseClassLines();
-                    searchParameters(line);
-                }
+        if (isMethodHead(line)) {
+                writeMethodStats();
+                updateClassStatForNewMethod();
+                updateMethodStatsForNewMethod(line);
             }
         }
-    }
 
     private String nextLine(String line, BufferedReader bufferedFile) throws IOException {
         line = bufferedFile.readLine();
@@ -62,14 +65,10 @@ public class MethodAnalyzer {
             bufferedFile.mark(line.length());
             classStats.increaseClassLines();
             methodStats.cyclomaticComplexitySearch(line);
-            if (line.contains("{") && !line.contains("public ")) {
-                methodStats.increaseMethodBracers();
-            }
-            if (methodStats.getMethodBracers() != 0) {
+            areThereNewOpenBracer(line);
+            if (bracersNumber != 0) {
                 methodStats.increaseLineNumber();
-                if (line.contains("}")) {
-                    methodStats.decreaseMethodBracers();
-                }
+                areThereCloseBracer(line);
             }
         }
         return line;
@@ -79,21 +78,57 @@ public class MethodAnalyzer {
         String sFichero = ("c:/ParseTest/Method_log.txt");
         FileWriter fileLog = new FileWriter(sFichero, true);
         PrintWriter printWriter = new PrintWriter(fileLog, true);
-        if (methodStats != null) {
+        if (thereAreStats()) {
             methodStats.writeStats(printWriter);
         }
         printWriter.close();
-
     }
 
     private void searchParameters(String line) {
-        if (line.contains("()")) {
-            return;
+        if (thereAreParameters(line)) {
+            countParameters(line);
         }
+    }
+
+    public boolean thereAreParameters(String line) {
+        return !line.contains("()");
+    }
+
+    public void countParameters(String line) {
         while (line.indexOf(",") > -1) {
             line = line.substring(line.indexOf(",") + 1, line.length());
             methodStats.increaseParamNumber();
         }
         methodStats.increaseParamNumber();
+    }
+
+    public void areThereNewOpenBracer(String line) {
+        if (line.contains("{") && !line.contains("public ")) {
+            increaseBracerNumber();
+        }
+    }
+
+    private void updateClassStatForNewMethod() {
+        classStats.increaseMethods();
+        classStats.increaseClassLines();
+    }
+
+    private void updateMethodStatsForNewMethod(String line) {
+        methodStats = new MethodStats();
+        methodStats.setMethodName(line);
+        increaseBracerNumber();
+        methodStats.increaseLineNumber();
+        searchParameters(line); 
+    }
+
+    private boolean isMethodHead(String line) {
+        return ( line.contains("public ") ||
+                 line.contains("private ")||
+                 line.contains("protected "))&&(
+                 line.contains(") {") || line.contains("){"));
+    }
+
+    public void decreaseMethodBracer() {
+        bracersNumber--;
     }
 }

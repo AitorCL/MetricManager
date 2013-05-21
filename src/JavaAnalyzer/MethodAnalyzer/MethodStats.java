@@ -1,7 +1,6 @@
 package JavaAnalyzer.MethodAnalyzer;
 
 import java.io.PrintWriter;
-import java.util.Date;
 
 public class MethodStats {
 
@@ -28,16 +27,8 @@ public class MethodStats {
         this.commentLines++;
     }
 
-    public void increaseMethodBracers() {
-        this.methodBracers++;
-    }
-
-    public void decreaseMethodBracers() {
-        this.methodBracers--;
-    }
-
     public void setMethodName(String methodName) {
-        this.methodName = methodName.substring(methodName.indexOf("p"), methodName.indexOf("("));
+        this.methodName = extractMethodName(methodName);
     }
 
     public void increaseParamNumber() {
@@ -90,6 +81,9 @@ public class MethodStats {
         printWriter.append("Params: " + paramNumber + ", ");
         printWriter.append("Lines: " + lineNumber + ", ");
         printWriter.append("CC: " + cyclomaticComplexity + "\r\n");
-        printWriter.append("");
+    }
+
+    public String extractMethodName(String methodName) {
+        return methodName.substring(methodName.indexOf("p"), methodName.indexOf("("));
     }
 }
