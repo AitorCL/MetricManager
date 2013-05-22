@@ -30,7 +30,6 @@ public class ImportAnalyzer {
             } else {
                 importStats.increaseOtherImports();
             }
-
         }
     }
 }

@@ -12,9 +12,30 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class JavaAnalyzer extends Analyzer {
+    
+    private ArrayList<PackageStats> packageList;
+    
+    public JavaAnalyzer() {
+        this.packageList = new ArrayList<>();
+    }
 
+    @Override
+    public void AnalyzePackage(File directory) throws FileNotFoundException, IOException {
+        for (File actualFile : directory.listFiles()) {
+            if (actualFile.isDirectory()) {
+                System.out.println(actualFile.getName());
+                AnalyzePackage(actualFile);
+            } else {
+                System.out.println(actualFile.getName());
+                increaseFilesNumber();
+                scanFile(actualFile);
+            }
+        } 
+    }
+    
     @Override
     public void scanFile(File file) throws FileNotFoundException, IOException {
         BufferedReader bufferedFile = getFileBuffer(file);
@@ -74,5 +95,4 @@ public class JavaAnalyzer extends Analyzer {
             bufferedFile.reset();
         }
     }
-
 }

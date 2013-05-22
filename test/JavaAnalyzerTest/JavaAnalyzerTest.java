@@ -1,17 +1,21 @@
-package ImportAnalyzerTest;
 
-import JavaAnalyzer.ImportAnalyzer.ImportAnalyzer;
-import JavaAnalyzer.ImportAnalyzer.ImportStats;
+package JavaAnalyzerTest;
+
 import JavaAnalyzer.JavaAnalyzer;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class ImportAnalyzerTest {
+
+public class JavaAnalyzerTest {
     
     @Test
     public void fileTest() throws FileNotFoundException, IOException{
@@ -19,11 +23,9 @@ public class ImportAnalyzerTest {
         String path = "C:/Users/AitorC/Desktop/HPDDS/MetricManager/test/CodeForTest/FileForTest.java";
         file = new File(path);
         BufferedReader bufferedFile = new BufferedReader(new FileReader(file));
-        ImportAnalyzer importAnalyzer = new ImportAnalyzer();
-        importAnalyzer.scanForImports(bufferedFile);
-        ImportStats importStats = new ImportStats();
-        importStats = importAnalyzer.getImportStats();
-        assertEquals(5, importStats.getTotalImports());
+        JavaAnalyzer jA = new JavaAnalyzer();
+        jA.scanFile(file);
+        assertTrue(true);
         bufferedFile.close();
     } 
 }

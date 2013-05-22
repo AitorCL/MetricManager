@@ -10,7 +10,4 @@ public abstract class Analyzer extends PackageAnalyzer {
         AnalyzePackage(new File(path));
         showStats();
     }
-
-    @Override
-    public abstract void scanFile(File file) throws FileNotFoundException, IOException;
 }
