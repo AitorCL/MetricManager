@@ -19,6 +19,22 @@ public class ClassStats {
         this.commentLinesNumber = 0;
     }
 
+    public int getAtributeNumber() {
+        return atributeNumber;
+    }
+
+    public int getMethodNumber() {
+        return methodNumber;
+    }
+
+    public int getClassLineNumber() {
+        return classLineNumber;
+    }
+
+    public int getCommentLinesNumber() {
+        return commentLinesNumber;
+    }
+
     public void setClassName(String className) {
         this.className = className.substring(className.indexOf("class"), className.indexOf("{"));
     }

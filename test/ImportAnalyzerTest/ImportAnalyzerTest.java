@@ -14,9 +14,9 @@ import static org.junit.Assert.*;
 public class ImportAnalyzerTest {
     
     @Test
-    public void fileTest() throws FileNotFoundException, IOException{
+    public void totalImportsTest() throws FileNotFoundException, IOException{
         File file;
-        String path = "C:/Users/AitorC/Desktop/HPDDS/MetricManager/test/CodeForTest/FileForTest.java";
+        String path = "test/CodeForTest/FileForTest.java";
         file = new File(path);
         BufferedReader bufferedFile = new BufferedReader(new FileReader(file));
         ImportAnalyzer importAnalyzer = new ImportAnalyzer();

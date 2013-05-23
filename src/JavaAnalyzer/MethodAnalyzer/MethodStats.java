@@ -19,6 +19,26 @@ public class MethodStats {
         this.methodBracers = 0;
     }
 
+    public String getMethodName() {
+        return methodName;
+    }
+
+    public int getParamNumber() {
+        return paramNumber;
+    }
+
+    public int getLineNumber() {
+        return lineNumber;
+    }
+
+    public int getCommentLines() {
+        return commentLines;
+    }
+
+    public int getCyclomaticComplexity() {
+        return cyclomaticComplexity;
+    }
+
     public int getMethodBracers() {
         return methodBracers;
     }

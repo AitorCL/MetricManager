@@ -20,7 +20,7 @@ public class JavaAnalyzerTest {
     @Test
     public void fileTest() throws FileNotFoundException, IOException{
         File file;
-        String path = "C:/Users/AitorC/Desktop/HPDDS/MetricManager/test/CodeForTest/FileForTest.java";
+        String path = "test/CodeForTest/FileForTest.java";
         file = new File(path);
         BufferedReader bufferedFile = new BufferedReader(new FileReader(file));
         JavaAnalyzer jA = new JavaAnalyzer();
