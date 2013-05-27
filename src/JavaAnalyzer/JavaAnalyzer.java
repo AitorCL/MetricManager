@@ -7,6 +7,7 @@ import JavaAnalyzer.ClassAnalyzer.ClassStats;
 import JavaAnalyzer.ImportAnalyzer.ImportAnalyzer;
 import JavaAnalyzer.ImportAnalyzer.ImportStats;
 import JavaAnalyzer.MethodAnalyzer.MethodAnalyzer;
+import JavaAnalyzer.MethodAnalyzer.MethodStats;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -17,6 +18,8 @@ import java.util.ArrayList;
 public class JavaAnalyzer extends Analyzer {
     
     private ArrayList<PackageStats> packageList;
+    private ClassStats classStat;
+    private MethodStats methodStat;
     
     public JavaAnalyzer() {
         this.packageList = new ArrayList<>();
