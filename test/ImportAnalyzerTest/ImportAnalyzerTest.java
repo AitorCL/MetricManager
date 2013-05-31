@@ -12,9 +12,9 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class ImportAnalyzerTest {
-    
+
     @Test
-    public void totalImportsTest() throws FileNotFoundException, IOException{
+    public void totalImportsTest() throws FileNotFoundException, IOException {
         File file;
         String path = "test/CodeForTest/FileForTest.java";
         file = new File(path);
@@ -25,5 +25,5 @@ public class ImportAnalyzerTest {
         importStats = importAnalyzer.getImportStats();
         assertEquals(5, importStats.getTotalImports());
         bufferedFile.close();
-    } 
+    }
 }

@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 public class MethodStats {
 
     private String methodName;
+    private String classWhereIBelong;
     private int paramNumber;
     private int lineNumber;
     private int commentLines;
@@ -13,10 +14,15 @@ public class MethodStats {
 
     public MethodStats() {
         this.methodName = "";
+        this.classWhereIBelong = "";
         this.paramNumber = 0;
         this.lineNumber = 0;
         this.cyclomaticComplexity = 0;
         this.methodBracers = 0;
+    }
+
+    public String getClassWhereIBelong() {
+        return classWhereIBelong;
     }
 
     public String getMethodName() {
@@ -105,5 +111,9 @@ public class MethodStats {
 
     public String extractMethodName(String methodName) {
         return methodName.substring(methodName.indexOf("p"), methodName.indexOf("("));
+    }
+
+    public void setClassWhereMethodBelong(String line) {
+        this.classWhereIBelong = line.substring(line.indexOf("class"), line.indexOf("{"));
     }
 }

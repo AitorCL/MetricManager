@@ -1,6 +1,7 @@
 package JavaAnalyzer.ClassAnalyzer;
 
 import JavaAnalyzer.CommentAnalyzer.CommentAnalyzer;
+import JavaAnalyzer.FileStatsStorage;
 import java.io.BufferedReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -10,9 +11,14 @@ import java.util.Date;
 public class ClassAnalyzer {
 
     private ClassStats classStats;
+    private FileStatsStorage fileStatsStorage;
 
     public ClassAnalyzer() {
         this.classStats = new ClassStats();
+    }
+
+    public ClassAnalyzer(FileStatsStorage fileStatsStorage) {
+        this.fileStatsStorage = fileStatsStorage;
     }
 
     public ClassStats getClassStats() {
@@ -21,7 +27,8 @@ public class ClassAnalyzer {
 
     public boolean scanForClasses(BufferedReader bufferedFile) throws IOException {
         String line;
-        CommentAnalyzer commentAnalyzer = new CommentAnalyzer(classStats);
+        //CommentAnalyzer commentAnalyzer = new CommentAnalyzer(classStats);
+        CommentAnalyzer commentAnalyzer = new CommentAnalyzer(fileStatsStorage.getClassStat());
         while ((line = bufferedFile.readLine()) != null) {
             if (line.contains("public class ")) {
                 updateClassStats(line);
@@ -35,8 +42,8 @@ public class ClassAnalyzer {
 
     public void writeClassStats() throws IOException {
         PrintWriter printWriter = openLogFile("c:/ParseTest/Class_log.txt");
-        if (classStats != null) {
-            classStats.writeStats(printWriter);
+        if (fileStatsStorage.getClassStat() != null) {
+            fileStatsStorage.getClassStat().writeStats(printWriter);
         }
         printWriter.close();
     }
@@ -45,7 +52,7 @@ public class ClassAnalyzer {
         PrintWriter printWriter = openLogFile("c:/ParseTest/Method_log.txt");
         Date fecha = new Date();
         printWriter.append("[" + fecha + "]" + "\r\n");
-        printWriter.append("Name: " + classStats.getClassName() + "\r\n");
+        printWriter.append("Name: " + fileStatsStorage.getClassStat().getClassName() + "\r\n");
         printWriter.close();
     }
 
@@ -56,7 +63,8 @@ public class ClassAnalyzer {
     }
 
     public void updateClassStats(String line) {
-        classStats.setClassName(line);
-        classStats.increaseClassLines();
+        fileStatsStorage.getClassStat().setClassName(line);
+        fileStatsStorage.getMethodStas().setClassWhereMethodBelong(line);
+        fileStatsStorage.getClassStat().increaseClassLines();
     }
 }

@@ -18,11 +18,11 @@ public class CommentAnalyzer {
         }
         if (isCommentaryBlock(line)) {
             return;
-        }        
+        }
     }
 
     public boolean isOneLineComentary(String line) {
-        if (line.contains("//")||(line.contains("/*") && line.contains("*/"))) {
+        if (line.contains("//") || (line.contains("/*") && line.contains("*/"))) {
             classStats.increaseCommentLines();
             return true;
         }
@@ -30,8 +30,12 @@ public class CommentAnalyzer {
     }
 
     public boolean isCommentaryBlock(String line) {
-        if (startCommentBlock(line)) return true;
-        if (isOpenBlock()) return true;
+        if (startCommentBlock(line)) {
+            return true;
+        }
+        if (isOpenBlock()) {
+            return true;
+        }
         finishCommentBlock(line);
         return false;
     }

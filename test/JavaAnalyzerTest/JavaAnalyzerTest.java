@@ -1,4 +1,3 @@
-
 package JavaAnalyzerTest;
 
 import JavaAnalyzer.JavaAnalyzer;
@@ -14,11 +13,10 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-
 public class JavaAnalyzerTest {
-    
+
     @Test
-    public void fileTest() throws FileNotFoundException, IOException{
+    public void fileTest() throws FileNotFoundException, IOException {
         File file;
         String path = "test/CodeForTest/FileForTest.java";
         file = new File(path);
@@ -27,5 +25,5 @@ public class JavaAnalyzerTest {
         jA.scanFile(file);
         assertTrue(true);
         bufferedFile.close();
-    } 
+    }
 }

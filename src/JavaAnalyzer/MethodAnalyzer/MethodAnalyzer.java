@@ -2,6 +2,7 @@ package JavaAnalyzer.MethodAnalyzer;
 
 import JavaAnalyzer.ClassAnalyzer.ClassStats;
 import JavaAnalyzer.CommentAnalyzer.CommentAnalyzer;
+import JavaAnalyzer.FileStatsStorage;
 import java.io.BufferedReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -11,10 +12,15 @@ public class MethodAnalyzer {
 
     private ClassStats classStats;
     private MethodStats methodStats;
+    private FileStatsStorage fileStatsStorage;
     private int bracersNumber;
 
     public MethodAnalyzer(ClassStats classStats) {
         this.classStats = classStats;
+    }
+
+    public MethodAnalyzer(FileStatsStorage fileStatsStorage) {
+        this.fileStatsStorage = fileStatsStorage;
     }
 
     public MethodStats getMethodStats() {
@@ -41,8 +47,8 @@ public class MethodAnalyzer {
 
     public String scanForMethods(BufferedReader bufferedFile) throws IOException {
         String line = bufferedFile.readLine();
-        classStats.increaseClassLines();
-        CommentAnalyzer commentAnalyzer = new CommentAnalyzer(classStats);
+        fileStatsStorage.getClassStat().increaseClassLines();
+        CommentAnalyzer commentAnalyzer = new CommentAnalyzer(fileStatsStorage.getClassStat());
         while ((line) != null && !line.contains("public class ")) {
             isMethod(line);
             commentAnalyzer.searchComment(line);
@@ -53,21 +59,21 @@ public class MethodAnalyzer {
 
     private void isMethod(String line) throws IOException {
         if (isMethodHead(line)) {
-                writeMethodStats();
-                updateClassStatForNewMethod();
-                updateMethodStatsForNewMethod(line);
-            }
+            writeMethodStats();
+            updateClassStatForNewMethod();
+            updateMethodStatsForNewMethod(line);
         }
+    }
 
     private String nextLine(String line, BufferedReader bufferedFile) throws IOException {
         line = bufferedFile.readLine();
         if (line != null) {
             bufferedFile.mark(line.length());
-            classStats.increaseClassLines();
-            methodStats.cyclomaticComplexitySearch(line);
+            fileStatsStorage.getClassStat().increaseClassLines();
+            fileStatsStorage.getMethodStas().cyclomaticComplexitySearch(line);
             areThereNewOpenBracer(line);
             if (bracersNumber != 0) {
-                methodStats.increaseLineNumber();
+                fileStatsStorage.getMethodStas().increaseLineNumber();
                 areThereCloseBracer(line);
             }
         }
@@ -97,9 +103,9 @@ public class MethodAnalyzer {
     public void countParameters(String line) {
         while (line.indexOf(",") > -1) {
             line = line.substring(line.indexOf(",") + 1, line.length());
-            methodStats.increaseParamNumber();
+            fileStatsStorage.getMethodStas().increaseParamNumber();
         }
-        methodStats.increaseParamNumber();
+        fileStatsStorage.getMethodStas().increaseParamNumber();
     }
 
     public void areThereNewOpenBracer(String line) {
@@ -109,23 +115,23 @@ public class MethodAnalyzer {
     }
 
     private void updateClassStatForNewMethod() {
-        classStats.increaseMethods();
-        classStats.increaseClassLines();
+        fileStatsStorage.getClassStat().increaseMethods();
+        fileStatsStorage.getClassStat().increaseClassLines();
     }
 
     private void updateMethodStatsForNewMethod(String line) {
-        methodStats = new MethodStats();
-        methodStats.setMethodName(line);
+        //methodStats = new MethodStats();
+        fileStatsStorage.addMethod();
+        fileStatsStorage.getMethodStas().setMethodName(line);
         increaseBracerNumber();
-        methodStats.increaseLineNumber();
-        searchParameters(line); 
+        fileStatsStorage.getMethodStas().increaseLineNumber();
+        searchParameters(line);
     }
 
     private boolean isMethodHead(String line) {
-        return ( line.contains("public ") ||
-                 line.contains("private ")||
-                 line.contains("protected "))&&(
-                 line.contains(") {") || line.contains("){"));
+        return (line.contains("public ")
+                || line.contains("private ")
+                || line.contains("protected ")) && (line.contains(") {") || line.contains("){"));
     }
 
     public void decreaseMethodBracer() {
