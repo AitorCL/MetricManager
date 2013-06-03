@@ -27,7 +27,6 @@ public class ClassAnalyzer {
 
     public boolean scanForClasses(BufferedReader bufferedFile) throws IOException {
         String line;
-        //CommentAnalyzer commentAnalyzer = new CommentAnalyzer(classStats);
         CommentAnalyzer commentAnalyzer = new CommentAnalyzer(fileStatsStorage.getClassStat());
         while ((line = bufferedFile.readLine()) != null) {
             if (line.contains("public class ")) {

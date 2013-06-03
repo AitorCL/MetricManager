@@ -33,7 +33,8 @@ public class CommentAnalyzer {
         if (startCommentBlock(line)) {
             return true;
         }
-        if (isOpenBlock()) {
+        if (!line.contains("*/")) {
+            isOpenBlock();
             return true;
         }
         finishCommentBlock(line);
