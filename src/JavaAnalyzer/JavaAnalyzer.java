@@ -29,6 +29,7 @@ public class JavaAnalyzer extends Analyzer {
         for (File actualFile : directory.listFiles()) {
             if (actualFile.isDirectory()) {
                 System.out.println(actualFile.getName());
+                packageList.add(new PackageStats(actualFile.getName()));
                 AnalyzePackage(actualFile);
             } else {
                 System.out.println(actualFile.getName());

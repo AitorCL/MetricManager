@@ -6,7 +6,7 @@ public class PackageStats {
     private int packageLineNumber;
     private int prackageClassNumber;
 
-    public PackageStats() {
+    public PackageStats(String packageName) {
         this.packageName = "";
         this.packageLineNumber = 0;
         this.prackageClassNumber = 0;
