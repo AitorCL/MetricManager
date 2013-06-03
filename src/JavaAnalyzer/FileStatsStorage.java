@@ -87,12 +87,12 @@ public class FileStatsStorage {
         PrintWriter printWriterMethods = openLogFile("c:/ParseTest/Method_logII.txt");
         Date fecha = new Date();
         for (MethodStats actualMethod : methodList) {
-                printWriterMethods.append("[" + fecha + "]" + "\r\n");
-                printWriterMethods.append("     class: " + actualMethod.getClassWhereIBelong() + ", ");
-                printWriterMethods.append("Method: " + actualMethod.getMethodName() + ", ");
-                printWriterMethods.append("Params: " + actualMethod.getParamNumber() + ", ");
-                printWriterMethods.append("Lines: " + actualMethod.getLineNumber() + ", ");
-                printWriterMethods.append("CC: " + actualMethod.getCyclomaticComplexity() + "\r\n");
+            printWriterMethods.append("[" + fecha + "]" + "\r\n");
+            printWriterMethods.append("     class: " + actualMethod.getClassWhereIBelong() + ", ");
+            printWriterMethods.append("Method: " + actualMethod.getMethodName() + ", ");
+            printWriterMethods.append("Params: " + actualMethod.getParamNumber() + ", ");
+            printWriterMethods.append("Lines: " + actualMethod.getLineNumber() + ", ");
+            printWriterMethods.append("CC: " + actualMethod.getCyclomaticComplexity() + "\r\n");
         }
         printWriterMethods.close();
     }

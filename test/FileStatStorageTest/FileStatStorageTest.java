@@ -47,6 +47,31 @@ public class FileStatStorageTest {
         assertEquals(29, fileStatStatsStorage.getClassList().get(0).getClassLineNumber());
         bufferedFile.close();        
     }
+ 
+    @Test
+    public void classMethodNumber() throws FileNotFoundException, IOException {
+        FileStatsStorage fileStatStatsStorage = new FileStatsStorage();
+        File file = new File(filePath);
+        BufferedReader bufferedFile = new BufferedReader(new FileReader(file));
+        JavaAnalyzer javaAnalyzer = new JavaAnalyzer();
+        javaAnalyzer.scanFile(file);
+        fileStatStatsStorage = javaAnalyzer.getFileStatsStorage();
+        assertEquals(2, fileStatStatsStorage.getClassList().get(0).getMethodNumber());
+        bufferedFile.close();        
+    }    
+    
+    @Test
+    public void classCommentNumber() throws FileNotFoundException, IOException {
+        FileStatsStorage fileStatStatsStorage = new FileStatsStorage();
+        File file = new File(filePath);
+        BufferedReader bufferedFile = new BufferedReader(new FileReader(file));
+        JavaAnalyzer javaAnalyzer = new JavaAnalyzer();
+        javaAnalyzer.scanFile(file);
+        fileStatStatsStorage = javaAnalyzer.getFileStatsStorage();
+        assertEquals(6, fileStatStatsStorage.getClassList().get(0).getCommentLinesNumber());
+        bufferedFile.close();        
+    }    
+    
     
     public BufferedReader initTest() throws FileNotFoundException {
         File file = new File(filePath);
