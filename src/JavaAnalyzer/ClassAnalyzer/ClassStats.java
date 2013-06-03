@@ -3,6 +3,7 @@ package JavaAnalyzer.ClassAnalyzer;
 public class ClassStats {
 
     private String className;
+    private String packageWhereIBelong;
     private int atributeNumber;
     private int methodNumber;
     private int classLineNumber;
@@ -10,6 +11,7 @@ public class ClassStats {
 
     public ClassStats() {
         this.className = "";
+        this.packageWhereIBelong ="";
         this.atributeNumber = 0;
         this.methodNumber = 0;
         this.classLineNumber = 0;
@@ -34,6 +36,14 @@ public class ClassStats {
 
     public void setClassName(String className) {
         this.className = className.substring(className.indexOf("class"), className.indexOf("{"));
+    }
+
+    public String getPackageWhereIBelong() {
+        return packageWhereIBelong;
+    }
+
+    public void setPackageWhereIBelong(String packageWhereIBelong) {
+        this.packageWhereIBelong = packageWhereIBelong;
     }
 
     public void increaseAtributes() {

@@ -10,16 +10,26 @@ import java.util.Date;
 
 public class FileStatsStorage {
 
+    private String packageUnderScan;
     private ClassStats classStat;
     private MethodStats MethodStas;
     private ArrayList<ClassStats> classList;
     private ArrayList<MethodStats> methodList;
 
     public FileStatsStorage() {
+        this.packageUnderScan = "";
         this.classStat = new ClassStats();
         this.MethodStas = new MethodStats();
         this.classList = new ArrayList<>();
         this.methodList = new ArrayList<>();
+    }
+
+    public String getPackageUnderScan() {
+        return packageUnderScan;
+    }
+
+    public void setPackageUnderScan(String packageUnderScan) {
+        this.packageUnderScan = packageUnderScan;
     }
 
     public ClassStats getClassStat() {

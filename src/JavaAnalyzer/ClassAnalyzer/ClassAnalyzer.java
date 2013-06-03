@@ -30,6 +30,8 @@ public class ClassAnalyzer {
 
     public void updateClassStats(String line) {
         fileStatsStorage.getClassStat().setClassName(line);
+        fileStatsStorage.getClassStat().setPackageWhereIBelong(
+                fileStatsStorage.getPackageUnderScan());
         fileStatsStorage.getMethodStas().setClassWhereMethodBelong(line);
         fileStatsStorage.getClassStat().increaseClassLines();
     }

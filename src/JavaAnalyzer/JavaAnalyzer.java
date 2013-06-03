@@ -37,6 +37,17 @@ public class JavaAnalyzer extends Analyzer {
                 scanFile(actualFile);
             }
         }
+        //New code
+        for (PackageStats actualPackage : packageList){
+            for(ClassStats actualClass : fileStatsStorage.getClassList())
+            {
+                if (actualClass.getPackageWhereIBelong().contains(actualPackage.getPackageName()))
+                {
+                    actualPackage.increaseClassNumber();
+                    actualPackage.increasePackageLineNumber(actualClass.getClassLineNumber());
+                }
+            }
+        }
     }
 
     @Override
@@ -62,7 +73,7 @@ public class JavaAnalyzer extends Analyzer {
     }
 
     private boolean findImports(BufferedReader bufferedFile) throws IOException {
-        ImportAnalyzer importAnalyzer = new ImportAnalyzer();
+        ImportAnalyzer importAnalyzer = new ImportAnalyzer(fileStatsStorage);
         importAnalyzer.scanForImports(bufferedFile);
         return moveBufferToMark(bufferedFile, importAnalyzer.getImportStats());
     }
