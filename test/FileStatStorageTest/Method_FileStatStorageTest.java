@@ -52,4 +52,12 @@ public class Method_FileStatStorageTest {
         fileStatStatsStorage = javaAnalyzer.getFileStatsStorage();
         assertEquals(1, fileStatStatsStorage.getMethodList().get(0).getParamNumber());
     }
+    
+    @Test
+    public void classWhereMethodBelong() throws FileNotFoundException, IOException {
+        JavaAnalyzer javaAnalyzer = new JavaAnalyzer();
+        javaAnalyzer.scanFile(file);
+        fileStatStatsStorage = javaAnalyzer.getFileStatsStorage();
+        assertEquals("class FileForTest ", fileStatStatsStorage.getMethodList().get(0).getClassWhereIBelong());
+    }
 }

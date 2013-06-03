@@ -57,6 +57,10 @@ public class MethodStats {
         this.methodName = extractMethodName(methodName);
     }
 
+    public void setClassWhereIBelong(String classWhereIBelong) {
+        this.classWhereIBelong = classWhereIBelong;
+    }
+
     public void increaseParamNumber() {
         this.paramNumber++;
     }
@@ -103,6 +107,7 @@ public class MethodStats {
     }
 
     public void writeStats(PrintWriter printWriter) {
+        printWriter.append("     Class: " + classWhereIBelong + ", ");
         printWriter.append("     Method: " + methodName + ", ");
         printWriter.append("Params: " + paramNumber + ", ");
         printWriter.append("Lines: " + lineNumber + ", ");

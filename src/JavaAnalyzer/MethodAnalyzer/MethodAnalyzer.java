@@ -107,6 +107,7 @@ public class MethodAnalyzer {
     private void updateMethodStatsForNewMethod(String line) {
         fileStatsStorage.addMethod();
         fileStatsStorage.getMethodStas().setMethodName(line);
+        fileStatsStorage.getMethodStas().setClassWhereIBelong(fileStatsStorage.getClassStat().getClassName());
         increaseBracerNumber();
         fileStatsStorage.getMethodStas().increaseLineNumber();
         searchParameters(line);
