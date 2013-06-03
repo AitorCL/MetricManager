@@ -10,14 +10,9 @@ import java.io.PrintWriter;
 
 public class MethodAnalyzer {
 
-    private ClassStats classStats;
     private MethodStats methodStats;
     private FileStatsStorage fileStatsStorage;
     private int bracersNumber;
-
-    public MethodAnalyzer(ClassStats classStats) {
-        this.classStats = classStats;
-    }
 
     public MethodAnalyzer(FileStatsStorage fileStatsStorage) {
         this.fileStatsStorage = fileStatsStorage;
@@ -59,7 +54,6 @@ public class MethodAnalyzer {
 
     private void isMethod(String line) throws IOException {
         if (isMethodHead(line)) {
-            writeMethodStats();
             updateClassStatForNewMethod();
             updateMethodStatsForNewMethod(line);
         }
@@ -80,16 +74,7 @@ public class MethodAnalyzer {
         return line;
     }
 
-    public void writeMethodStats() throws IOException {
-        String sFichero = ("c:/ParseTest/Method_log.txt");
-        FileWriter fileLog = new FileWriter(sFichero, true);
-        PrintWriter printWriter = new PrintWriter(fileLog, true);
-        if (thereAreStats()) {
-            methodStats.writeStats(printWriter);
-        }
-        printWriter.close();
-    }
-
+    
     private void searchParameters(String line) {
         if (thereAreParameters(line)) {
             countParameters(line);
@@ -120,7 +105,6 @@ public class MethodAnalyzer {
     }
 
     private void updateMethodStatsForNewMethod(String line) {
-        //methodStats = new MethodStats();
         fileStatsStorage.addMethod();
         fileStatsStorage.getMethodStas().setMethodName(line);
         increaseBracerNumber();

@@ -7,7 +7,6 @@ import JavaAnalyzer.ClassAnalyzer.ClassStats;
 import JavaAnalyzer.ImportAnalyzer.ImportAnalyzer;
 import JavaAnalyzer.ImportAnalyzer.ImportStats;
 import JavaAnalyzer.MethodAnalyzer.MethodAnalyzer;
-import JavaAnalyzer.MethodAnalyzer.MethodStats;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -70,7 +69,6 @@ public class JavaAnalyzer extends Analyzer {
     private void findClasses(BufferedReader bufferedFile) throws IOException {
         ClassAnalyzer classAnalyzer = new ClassAnalyzer(fileStatsStorage);
         if (classAnalyzer.scanForClasses(bufferedFile)) {
-            classAnalyzer.prepareMethodStatsFile();
             findAtributes(bufferedFile, fileStatsStorage.getClassStat());
             findMethods(bufferedFile, fileStatsStorage.getClassStat());
             fileStatsStorage.addClass();

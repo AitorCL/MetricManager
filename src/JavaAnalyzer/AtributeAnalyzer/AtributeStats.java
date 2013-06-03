@@ -45,12 +45,4 @@ public class AtributeStats {
     public void increaseTotalAtributes() {
         this.totalAtributes++;
     }
-
-    public void writeStats(PrintWriter printWriter) {
-        printWriter.println("Atributes:");
-        printWriter.println("   Public    : " + publicAtributes);
-        printWriter.println("   Private   : " + protectedAtributes);
-        printWriter.println("   Protected : " + privateAtributes);
-        printWriter.println("");
-    }
 }
