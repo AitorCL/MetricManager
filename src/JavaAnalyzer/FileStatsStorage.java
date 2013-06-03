@@ -30,6 +30,14 @@ public class FileStatsStorage {
         return MethodStas;
     }
 
+    public ArrayList<ClassStats> getClassList() {
+        return classList;
+    }
+
+    public ArrayList<MethodStats> getMethodList() {
+        return methodList;
+    }
+
     public void setClassStat(ClassStats classStat) {
         this.classStat = classStat;
     }
@@ -44,7 +52,9 @@ public class FileStatsStorage {
     }
 
     public void addMethod() {
-        methodList.add(this.MethodStas);
+        if (!"".equals(this.MethodStas.getMethodName())) {
+            methodList.add(this.MethodStas);
+        }
         this.MethodStas = new MethodStats();
     }
 
@@ -60,32 +70,30 @@ public class FileStatsStorage {
     }
 
     public void writeClasses() throws IOException {
-        PrintWriter printWriter = openLogFile("c:/ParseTest/Class_logII.txt");
+        PrintWriter printWriterClases = openLogFile("c:/ParseTest/Class_logII.txt");
+        Date fecha = new Date();
         for (ClassStats actualClass : classList) {
-            Date fecha = new Date();
-            printWriter.append("[" + fecha + "]");
-            printWriter.append("Name: " + actualClass.getClassName() + ",");
-            printWriter.append("Atributes: " + actualClass.getAtributeNumber() + ",");
-            printWriter.append("Methods: " + actualClass.getMethodNumber() + ",");
-            printWriter.append("Lines: " + actualClass.getClassLineNumber() + ",");
-            printWriter.append("Comment: " + actualClass.getCommentLinesNumber() + "\r\n");
+            printWriterClases.append("[" + fecha + "]");
+            printWriterClases.append("Name: " + actualClass.getClassName() + ",");
+            printWriterClases.append("Atributes: " + actualClass.getAtributeNumber() + ",");
+            printWriterClases.append("Methods: " + actualClass.getMethodNumber() + ",");
+            printWriterClases.append("Lines: " + actualClass.getClassLineNumber() + ",");
+            printWriterClases.append("Comment: " + actualClass.getCommentLinesNumber() + "\r\n");
         }
-        printWriter.close();
+        printWriterClases.close();
     }
 
     public void writeMethod() throws IOException {
-        PrintWriter printWriter = openLogFile("c:/ParseTest/Method_logII.txt");
+        PrintWriter printWriterMethods = openLogFile("c:/ParseTest/Method_logII.txt");
         Date fecha = new Date();
-        printWriter.append("[" + fecha + "]" + "\r\n");
         for (MethodStats actualMethod : methodList) {
-            if (!"".equals(actualMethod.getMethodName())) {
-                printWriter.append("     class: " + actualMethod.getClassWhereIBelong() + ", ");
-                printWriter.append("Method: " + actualMethod.getMethodName() + ", ");
-                printWriter.append("Params: " + actualMethod.getParamNumber() + ", ");
-                printWriter.append("Lines: " + actualMethod.getLineNumber() + ", ");
-                printWriter.append("CC: " + actualMethod.getCyclomaticComplexity() + "\r\n");
-            }
+                printWriterMethods.append("[" + fecha + "]" + "\r\n");
+                printWriterMethods.append("     class: " + actualMethod.getClassWhereIBelong() + ", ");
+                printWriterMethods.append("Method: " + actualMethod.getMethodName() + ", ");
+                printWriterMethods.append("Params: " + actualMethod.getParamNumber() + ", ");
+                printWriterMethods.append("Lines: " + actualMethod.getLineNumber() + ", ");
+                printWriterMethods.append("CC: " + actualMethod.getCyclomaticComplexity() + "\r\n");
         }
-        printWriter.close();
+        printWriterMethods.close();
     }
 }

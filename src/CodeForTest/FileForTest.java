@@ -11,7 +11,7 @@ public class FileForTest {
     /**
      * Main method
      */
-    public static void main(String[] args) {
+    public static void start(String[] args) {
         int firstNumber = 5;
         int secondNumber = 2;
         int maxNumber = max(firstNumber, secondNumber);

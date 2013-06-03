@@ -13,17 +13,17 @@ import static org.junit.Assert.*;
 
 public class ImportAnalyzerTest {
 
+    private String filePath = "src/CodeForTest/FileForTest.java";
+
     @Test
     public void totalImportsTest() throws FileNotFoundException, IOException {
-        File file;
-        String path = "test/CodeForTest/FileForTest.java";
-        file = new File(path);
-        BufferedReader bufferedFile = new BufferedReader(new FileReader(file));
-        ImportAnalyzer importAnalyzer = new ImportAnalyzer();
-        importAnalyzer.scanForImports(bufferedFile);
-        ImportStats importStats = new ImportStats();
-        importStats = importAnalyzer.getImportStats();
-        assertEquals(5, importStats.getTotalImports());
-        bufferedFile.close();
+        File file = new File(filePath);
+        try (BufferedReader bufferedFile = new BufferedReader(new FileReader(file))) {
+            ImportAnalyzer importAnalyzer = new ImportAnalyzer();
+            importAnalyzer.scanForImports(bufferedFile);
+            ImportStats importStats = new ImportStats();
+            importStats = importAnalyzer.getImportStats();
+            assertEquals(5, importStats.getTotalImports());
+        }
     }
 }

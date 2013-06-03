@@ -15,7 +15,7 @@ public class ClassAnalyzerTest {
 
     @Test
     public void className() throws FileNotFoundException, IOException {
-        String path = "test/CodeForTest/FileForTest.java";
+        String path = "src/CodeForTest/FileForTest.java";
         File file = new File(path);
         BufferedReader bufferedFile = new BufferedReader(new FileReader(file));
         ClassStats classStats = new ClassStats();

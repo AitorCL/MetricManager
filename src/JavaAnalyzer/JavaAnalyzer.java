@@ -18,8 +18,6 @@ import java.util.ArrayList;
 public class JavaAnalyzer extends Analyzer {
 
     private ArrayList<PackageStats> packageList;
-    private ClassStats classStat;
-    private MethodStats methodStat;
     private FileStatsStorage fileStatsStorage;
 
     public JavaAnalyzer() {
@@ -47,9 +45,12 @@ public class JavaAnalyzer extends Analyzer {
         startScan(bufferedFile, file);
     }
 
-    private BufferedReader getFileBuffer(File file) throws FileNotFoundException, IOException {
-        BufferedReader bufferedFile = new BufferedReader(new FileReader(file));
-        return bufferedFile;
+    public FileStatsStorage getFileStatsStorage() {
+        return fileStatsStorage;
+    }
+    
+    private BufferedReader getFileBuffer(File file) throws FileNotFoundException, IOException {     
+        return  new BufferedReader(new FileReader(file));
     }
 
     private void startScan(BufferedReader bufferedFile, File file) throws IOException {
@@ -72,7 +73,6 @@ public class JavaAnalyzer extends Analyzer {
             classAnalyzer.prepareMethodStatsFile();
             findAtributes(bufferedFile, fileStatsStorage.getClassStat());
             findMethods(bufferedFile, fileStatsStorage.getClassStat());
-            //classAnalyzer.writeClassStats();
             fileStatsStorage.addClass();
             findClasses(bufferedFile);
         }
@@ -86,7 +86,6 @@ public class JavaAnalyzer extends Analyzer {
     private void findMethods(BufferedReader bufferedFile, ClassStats classStats) throws IOException {
         MethodAnalyzer methodAnalyzer = new MethodAnalyzer(fileStatsStorage);
         moveBufferToMark(methodAnalyzer.scanForMethods(bufferedFile), bufferedFile);
-        //methodAnalyzer.writeMethodStats();
         fileStatsStorage.addMethod();
     }
 
