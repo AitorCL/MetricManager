@@ -1,8 +1,5 @@
 package JavaAnalyzer.ClassAnalyzer;
 
-import java.io.PrintWriter;
-import java.util.Date;
-
 public class ClassStats {
 
     private String className;
@@ -53,16 +50,6 @@ public class ClassStats {
 
     public void increaseCommentLines() {
         this.commentLinesNumber++;
-    }
-
-    public void writeStats(PrintWriter printWriter) {
-        Date fecha = new Date();
-        printWriter.append("[" + fecha + "]");
-        printWriter.append("Name: " + className + ",");
-        printWriter.append("Atributes: " + atributeNumber + ",");
-        printWriter.append("Methods: " + methodNumber + ",");
-        printWriter.append("Lines: " + classLineNumber + ",");
-        printWriter.append("Comment: " + commentLinesNumber + "\r\n");
     }
 
     public String getClassName() {

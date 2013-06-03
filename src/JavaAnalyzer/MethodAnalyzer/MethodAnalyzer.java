@@ -1,12 +1,9 @@
 package JavaAnalyzer.MethodAnalyzer;
 
-import JavaAnalyzer.ClassAnalyzer.ClassStats;
 import JavaAnalyzer.CommentAnalyzer.CommentAnalyzer;
 import JavaAnalyzer.FileStatsStorage;
 import java.io.BufferedReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 public class MethodAnalyzer {
 
@@ -34,10 +31,6 @@ public class MethodAnalyzer {
 
     private void increaseBracerNumber() {
         bracersNumber++;
-    }
-
-    private boolean thereAreStats() {
-        return methodStats != null;
     }
 
     public String scanForMethods(BufferedReader bufferedFile) throws IOException {
@@ -76,12 +69,12 @@ public class MethodAnalyzer {
 
     
     private void searchParameters(String line) {
-        if (thereAreParameters(line)) {
+        if (areThereParameters(line)) {
             countParameters(line);
         }
     }
 
-    public boolean thereAreParameters(String line) {
+    public boolean areThereParameters(String line) {
         return !line.contains("()");
     }
 

@@ -16,9 +16,7 @@ public class CommentAnalyzer {
         if (isOneLineComentary(line)) {
             return;
         }
-        if (isCommentaryBlock(line)) {
-            return;
-        }
+        isCommentaryBlock(line);
     }
 
     public boolean isOneLineComentary(String line) {

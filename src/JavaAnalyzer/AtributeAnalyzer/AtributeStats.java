@@ -1,7 +1,5 @@
 package JavaAnalyzer.AtributeAnalyzer;
 
-import java.io.PrintWriter;
-
 public class AtributeStats {
 
     private int publicAtributes;

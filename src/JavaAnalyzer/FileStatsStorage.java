@@ -70,30 +70,30 @@ public class FileStatsStorage {
     }
 
     public void writeClasses() throws IOException {
-        PrintWriter printWriterClases = openLogFile("c:/ParseTest/Class_logII.txt");
-        Date fecha = new Date();
-        for (ClassStats actualClass : classList) {
-            printWriterClases.append("[" + fecha + "]");
-            printWriterClases.append("Name: " + actualClass.getClassName() + ",");
-            printWriterClases.append("Atributes: " + actualClass.getAtributeNumber() + ",");
-            printWriterClases.append("Methods: " + actualClass.getMethodNumber() + ",");
-            printWriterClases.append("Lines: " + actualClass.getClassLineNumber() + ",");
-            printWriterClases.append("Comment: " + actualClass.getCommentLinesNumber() + "\r\n");
+        try (PrintWriter printWriterClases = openLogFile("c:/ParseTest/Class_logII.txt")) {
+            Date fecha = new Date();
+            for (ClassStats actualClass : classList) {
+                printWriterClases.append("[" + fecha + "]");
+                printWriterClases.append("Name: " + actualClass.getClassName() + ",");
+                printWriterClases.append("Atributes: " + actualClass.getAtributeNumber() + ",");
+                printWriterClases.append("Methods: " + actualClass.getMethodNumber() + ",");
+                printWriterClases.append("Lines: " + actualClass.getClassLineNumber() + ",");
+                printWriterClases.append("Comment: " + actualClass.getCommentLinesNumber() + "\r\n");
+            }
         }
-        printWriterClases.close();
     }
 
     public void writeMethod() throws IOException {
-        PrintWriter printWriterMethods = openLogFile("c:/ParseTest/Method_logII.txt");
-        Date fecha = new Date();
-        for (MethodStats actualMethod : methodList) {
-            printWriterMethods.append("[" + fecha + "]" + "\r\n");
-            printWriterMethods.append("     class: " + actualMethod.getClassWhereIBelong() + ", ");
-            printWriterMethods.append("Method: " + actualMethod.getMethodName() + ", ");
-            printWriterMethods.append("Params: " + actualMethod.getParamNumber() + ", ");
-            printWriterMethods.append("Lines: " + actualMethod.getLineNumber() + ", ");
-            printWriterMethods.append("CC: " + actualMethod.getCyclomaticComplexity() + "\r\n");
+        try (PrintWriter printWriterMethods = openLogFile("c:/ParseTest/Method_logII.txt")) {
+            Date fecha = new Date();
+            for (MethodStats actualMethod : methodList) {
+                printWriterMethods.append("[" + fecha + "]" + "\r\n");
+                printWriterMethods.append("     class: " + actualMethod.getClassWhereIBelong() + ", ");
+                printWriterMethods.append("Method: " + actualMethod.getMethodName() + ", ");
+                printWriterMethods.append("Params: " + actualMethod.getParamNumber() + ", ");
+                printWriterMethods.append("Lines: " + actualMethod.getLineNumber() + ", ");
+                printWriterMethods.append("CC: " + actualMethod.getCyclomaticComplexity() + "\r\n");
+            }
         }
-        printWriterMethods.close();
     }
 }

@@ -3,10 +3,7 @@ package JavaAnalyzer.ClassAnalyzer;
 import JavaAnalyzer.CommentAnalyzer.CommentAnalyzer;
 import JavaAnalyzer.FileStatsStorage;
 import java.io.BufferedReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Date;
 
 public class ClassAnalyzer {
 
