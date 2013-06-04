@@ -12,33 +12,45 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class JavaAnalyzer extends Analyzer {
 
     private ArrayList<PackageStats> packageList;
     private FileStatsStorage fileStatsStorage;
+    private FileWriterStats fileWriterStats;
 
     public JavaAnalyzer() {
         this.packageList = new ArrayList<>();
         this.fileStatsStorage = new FileStatsStorage();
+        this.fileWriterStats = new FileWriterStats();
+        
     }
 
+    public void fullScan(File directory) throws FileNotFoundException, IOException{
+        AnalyzePackage(directory);
+        updatePackageStats();
+        fileWriterStats.writePackages(packageList);
+        fileWriterStats.writeClasses(fileStatsStorage.getClassList());
+        fileWriterStats.writeMethod(fileStatsStorage.getMethodList());
+    }
+    
     @Override
     public void AnalyzePackage(File directory) throws FileNotFoundException, IOException {
         for (File actualFile : directory.listFiles()) {
             if (actualFile.isDirectory()) {
-                System.out.println(actualFile.getName());
                 packageList.add(new PackageStats(actualFile.getName()));
                 AnalyzePackage(actualFile);
             } else {
-                System.out.println(actualFile.getName());
-                increaseFilesNumber();
                 scanFile(actualFile);
             }
-        }
-        //New code
-        for (PackageStats actualPackage : packageList){
+        }       
+    }
+
+    public void updatePackageStats(){
+         for (PackageStats actualPackage : packageList){
             for(ClassStats actualClass : fileStatsStorage.getClassList())
             {
                 if (actualClass.getPackageWhereIBelong().contains(actualPackage.getPackageName()))
@@ -49,7 +61,7 @@ public class JavaAnalyzer extends Analyzer {
             }
         }
     }
-
+       
     @Override
     public void scanFile(File file) throws FileNotFoundException, IOException {
         BufferedReader bufferedFile = getFileBuffer(file);
@@ -69,7 +81,6 @@ public class JavaAnalyzer extends Analyzer {
             bufferedFile = getFileBuffer(file);
         }
         findClasses(bufferedFile);
-        fileStatsStorage.writeStats();
     }
 
     private boolean findImports(BufferedReader bufferedFile) throws IOException {

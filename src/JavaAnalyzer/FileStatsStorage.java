@@ -68,42 +68,4 @@ public class FileStatsStorage {
         this.MethodStas = new MethodStats();
     }
 
-    void writeStats() throws IOException {
-        writeClasses();
-        writeMethod();
-    }
-
-    public PrintWriter openLogFile(String path) throws IOException {
-        FileWriter fileLog = new FileWriter(path, true);
-        PrintWriter printWriter = new PrintWriter(fileLog, true);
-        return printWriter;
-    }
-
-    public void writeClasses() throws IOException {
-        try (PrintWriter printWriterClases = openLogFile("c:/ParseTest/Class_logII.txt")) {
-            Date fecha = new Date();
-            for (ClassStats actualClass : classList) {
-                printWriterClases.append("[" + fecha + "]");
-                printWriterClases.append("Name: " + actualClass.getClassName() + ",");
-                printWriterClases.append("Atributes: " + actualClass.getAtributeNumber() + ",");
-                printWriterClases.append("Methods: " + actualClass.getMethodNumber() + ",");
-                printWriterClases.append("Lines: " + actualClass.getClassLineNumber() + ",");
-                printWriterClases.append("Comment: " + actualClass.getCommentLinesNumber() + "\r\n");
-            }
-        }
-    }
-
-    public void writeMethod() throws IOException {
-        try (PrintWriter printWriterMethods = openLogFile("c:/ParseTest/Method_logII.txt")) {
-            Date fecha = new Date();
-            for (MethodStats actualMethod : methodList) {
-                printWriterMethods.append("[" + fecha + "]" + "\r\n");
-                printWriterMethods.append("     class: " + actualMethod.getClassWhereIBelong() + ", ");
-                printWriterMethods.append("Method: " + actualMethod.getMethodName() + ", ");
-                printWriterMethods.append("Params: " + actualMethod.getParamNumber() + ", ");
-                printWriterMethods.append("Lines: " + actualMethod.getLineNumber() + ", ");
-                printWriterMethods.append("CC: " + actualMethod.getCyclomaticComplexity() + "\r\n");
-            }
-        }
-    }
 }
