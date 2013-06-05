@@ -10,6 +10,12 @@ import java.util.Date;
 
 public class FileWriterStats {
 
+    private String resultPath;
+
+    public FileWriterStats(String path) {
+        this.resultPath = path;
+    }
+
     public PrintWriter openLogFile(String path) throws IOException {
         FileWriter fileLog = new FileWriter(path, true);
         PrintWriter printWriter = new PrintWriter(fileLog, true);
@@ -17,10 +23,9 @@ public class FileWriterStats {
     }
 
     public void writePackages(ArrayList<PackageStats> packageList) throws IOException {
-        try (PrintWriter printWriterPackage = openLogFile("c:/ParseTest/Package_log.txt")) {
+        try (PrintWriter printWriterPackage = openLogFile(resultPath + "/Package_log.txt")) {
             Date fecha = new Date();
             for (PackageStats packageClass : packageList) {
-                printWriterPackage.append("-----------------------------------------------------\r\n");
                 printWriterPackage.append("[" + fecha + "]");
                 printWriterPackage.append("Name: " + packageClass.getPackageName() + ",");
                 printWriterPackage.append("Classes: " + packageClass.getPrackageClassNumber() + ",");
@@ -31,7 +36,7 @@ public class FileWriterStats {
     }
 
     public void writeClasses(ArrayList<ClassStats> classList) throws IOException {
-        try (PrintWriter printWriterClases = openLogFile("c:/ParseTest/Class_log.txt")) {
+        try (PrintWriter printWriterClases = openLogFile(resultPath + "/Class_log.txt")) {
             Date fecha = new Date();
             for (ClassStats actualClass : classList) {
                 printWriterClases.append("[" + fecha + "]");
@@ -46,10 +51,10 @@ public class FileWriterStats {
     }
 
     public void writeMethod(ArrayList<MethodStats> methodList) throws IOException {
-        try (PrintWriter printWriterMethods = openLogFile("c:/ParseTest/Method_log.txt")) {
+        try (PrintWriter printWriterMethods = openLogFile(resultPath + "/Method_log.txt")) {
             Date fecha = new Date();
+            printWriterMethods.append("[" + fecha + "]" + "\r\n");
             for (MethodStats actualMethod : methodList) {
-                printWriterMethods.append("[" + fecha + "]" + "\r\n");
                 printWriterMethods.append("     class: " + actualMethod.getClassWhereIBelong() + ", ");
                 printWriterMethods.append("Method: " + actualMethod.getMethodName() + ", ");
                 printWriterMethods.append("Params: " + actualMethod.getParamNumber() + ", ");
@@ -57,6 +62,6 @@ public class FileWriterStats {
                 printWriterMethods.append("CC: " + actualMethod.getCyclomaticComplexity() + "\r\n");
             }
             printWriterMethods.close();
-        }        
+        }
     }
 }

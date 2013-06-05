@@ -9,10 +9,6 @@ public class ImportAnalyzer {
     private ImportStats importStats;
     private FileStatsStorage fileStatsStorage;
 
-    public ImportAnalyzer() {
-        this.importStats = new ImportStats();
-    }
-
     public ImportAnalyzer(FileStatsStorage fileStatsStorage) {
         this.importStats = new ImportStats();
         this.fileStatsStorage = fileStatsStorage;
@@ -42,8 +38,7 @@ public class ImportAnalyzer {
     }
 
     private void isPackage(String line) {
-        if(line.contains("package "))
-        {
+        if (line.contains("package ")) {
             fileStatsStorage.setPackageUnderScan(line);
         }
     }

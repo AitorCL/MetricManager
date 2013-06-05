@@ -14,14 +14,13 @@ import org.junit.Test;
 
 public class Class_FileStatStorageTest {
 
-    private String filePath = "src/CodeForTest/FileForTest.java";
+    private String sorucePath = "src/CodeForTest";
+    private String resultPath = "c:/ParseTest";
     private FileStatsStorage fileStatsStorage = new FileStatsStorage();
-    private         File file = new File(filePath);
 
     @Test
     public void className() throws FileNotFoundException, IOException {
         ClassStats classStats = new ClassStats();
-        
         ClassAnalyzer classAnalyzer = new ClassAnalyzer(fileStatsStorage);
         classAnalyzer.scanForClasses(initTest());
         classStats = fileStatsStorage.getClassStat();
@@ -39,30 +38,30 @@ public class Class_FileStatStorageTest {
 
     @Test
     public void classLineNumber() throws FileNotFoundException, IOException {
-        JavaAnalyzer javaAnalyzer = new JavaAnalyzer();
-        javaAnalyzer.scanFile(file);
+        JavaAnalyzer javaAnalyzer = new JavaAnalyzer(sorucePath, resultPath);
+        javaAnalyzer.fullScan();
         fileStatsStorage = javaAnalyzer.getFileStatsStorage();
         assertEquals(29, fileStatsStorage.getClassList().get(0).getClassLineNumber());
     }
 
     @Test
     public void classMethodNumber() throws FileNotFoundException, IOException {
-        JavaAnalyzer javaAnalyzer = new JavaAnalyzer();
-        javaAnalyzer.scanFile(file);
+        JavaAnalyzer javaAnalyzer = new JavaAnalyzer(sorucePath, resultPath);
+        javaAnalyzer.fullScan();
         fileStatsStorage = javaAnalyzer.getFileStatsStorage();
         assertEquals(2, fileStatsStorage.getClassList().get(0).getMethodNumber());
     }
 
     @Test
     public void classCommentNumber() throws FileNotFoundException, IOException {
-        JavaAnalyzer javaAnalyzer = new JavaAnalyzer();
-        javaAnalyzer.scanFile(file);
+        JavaAnalyzer javaAnalyzer = new JavaAnalyzer(sorucePath, resultPath);
+        javaAnalyzer.fullScan();
         fileStatsStorage = javaAnalyzer.getFileStatsStorage();
         assertEquals(6, fileStatsStorage.getClassList().get(0).getCommentLinesNumber());
     }
 
     public BufferedReader initTest() throws FileNotFoundException {
-        BufferedReader bufferedFile = new BufferedReader(new FileReader(file));
+        BufferedReader bufferedFile = new BufferedReader(new FileReader("src/CodeForTest/FileForTest.java"));
         return bufferedFile;
     }
 }

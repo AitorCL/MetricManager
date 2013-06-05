@@ -35,13 +35,12 @@ public class PackageStats {
     public void setPrackageClassNumber(int prackageClassNumber) {
         this.prackageClassNumber = prackageClassNumber;
     }
-    public void increaseClassNumber()
-    {
+
+    public void increaseClassNumber() {
         this.prackageClassNumber++;
     }
-    public void increasePackageLineNumber(int lines)
-    {
+
+    public void increasePackageLineNumber(int lines) {
         this.packageLineNumber += lines;
     }
-    
 }

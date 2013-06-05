@@ -2,11 +2,7 @@ package JavaAnalyzer;
 
 import JavaAnalyzer.ClassAnalyzer.ClassStats;
 import JavaAnalyzer.MethodAnalyzer.MethodStats;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class FileStatsStorage {
 
@@ -67,5 +63,4 @@ public class FileStatsStorage {
         }
         this.MethodStas = new MethodStats();
     }
-
 }

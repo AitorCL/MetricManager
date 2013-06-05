@@ -7,20 +7,11 @@ import java.io.IOException;
 
 public class MethodAnalyzer {
 
-    private MethodStats methodStats;
     private FileStatsStorage fileStatsStorage;
     private int bracersNumber;
 
     public MethodAnalyzer(FileStatsStorage fileStatsStorage) {
         this.fileStatsStorage = fileStatsStorage;
-    }
-
-    public MethodStats getMethodStats() {
-        return methodStats;
-    }
-
-    public void setMethodStats(MethodStats methodStats) {
-        this.methodStats = methodStats;
     }
 
     private void areThereCloseBracer(String line) {
@@ -67,7 +58,6 @@ public class MethodAnalyzer {
         return line;
     }
 
-    
     private void searchParameters(String line) {
         if (areThereParameters(line)) {
             countParameters(line);

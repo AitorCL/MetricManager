@@ -12,31 +12,28 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class JavaAnalyzer extends Analyzer {
 
     private ArrayList<PackageStats> packageList;
     private FileStatsStorage fileStatsStorage;
     private FileWriterStats fileWriterStats;
+    private File directory;
 
-    public JavaAnalyzer() {
+    public JavaAnalyzer(String sourcePath, String resultPath) {
         this.packageList = new ArrayList<>();
         this.fileStatsStorage = new FileStatsStorage();
-        this.fileWriterStats = new FileWriterStats();
-        
+        this.fileWriterStats = new FileWriterStats(resultPath);
+        this.directory = new File(sourcePath);
     }
 
-    public void fullScan(File directory) throws FileNotFoundException, IOException{
+    public void fullScan() throws FileNotFoundException, IOException {
         AnalyzePackage(directory);
         updatePackageStats();
-        fileWriterStats.writePackages(packageList);
-        fileWriterStats.writeClasses(fileStatsStorage.getClassList());
-        fileWriterStats.writeMethod(fileStatsStorage.getMethodList());
+        writeScanResults();
     }
-    
+
     @Override
     public void AnalyzePackage(File directory) throws FileNotFoundException, IOException {
         for (File actualFile : directory.listFiles()) {
@@ -46,22 +43,20 @@ public class JavaAnalyzer extends Analyzer {
             } else {
                 scanFile(actualFile);
             }
-        }       
+        }
     }
 
-    public void updatePackageStats(){
-         for (PackageStats actualPackage : packageList){
-            for(ClassStats actualClass : fileStatsStorage.getClassList())
-            {
-                if (actualClass.getPackageWhereIBelong().contains(actualPackage.getPackageName()))
-                {
+    public void updatePackageStats() {
+        for (PackageStats actualPackage : packageList) {
+            for (ClassStats actualClass : fileStatsStorage.getClassList()) {
+                if (actualClass.getPackageWhereIBelong().contains(actualPackage.getPackageName())) {
                     actualPackage.increaseClassNumber();
                     actualPackage.increasePackageLineNumber(actualClass.getClassLineNumber());
                 }
             }
         }
     }
-       
+
     @Override
     public void scanFile(File file) throws FileNotFoundException, IOException {
         BufferedReader bufferedFile = getFileBuffer(file);
@@ -71,9 +66,9 @@ public class JavaAnalyzer extends Analyzer {
     public FileStatsStorage getFileStatsStorage() {
         return fileStatsStorage;
     }
-    
-    private BufferedReader getFileBuffer(File file) throws FileNotFoundException, IOException {     
-        return  new BufferedReader(new FileReader(file));
+
+    private BufferedReader getFileBuffer(File file) throws FileNotFoundException, IOException {
+        return new BufferedReader(new FileReader(file));
     }
 
     private void startScan(BufferedReader bufferedFile, File file) throws IOException {
@@ -93,7 +88,7 @@ public class JavaAnalyzer extends Analyzer {
         ClassAnalyzer classAnalyzer = new ClassAnalyzer(fileStatsStorage);
         if (classAnalyzer.scanForClasses(bufferedFile)) {
             findAtributes(bufferedFile, fileStatsStorage.getClassStat());
-            findMethods(bufferedFile, fileStatsStorage.getClassStat());
+            findMethods(bufferedFile);
             fileStatsStorage.addClass();
             findClasses(bufferedFile);
         }
@@ -104,7 +99,7 @@ public class JavaAnalyzer extends Analyzer {
         moveBufferToMark(atributeAnalyzer.scanForAtributes(bufferedFile), bufferedFile);
     }
 
-    private void findMethods(BufferedReader bufferedFile, ClassStats classStats) throws IOException {
+    private void findMethods(BufferedReader bufferedFile) throws IOException {
         MethodAnalyzer methodAnalyzer = new MethodAnalyzer(fileStatsStorage);
         moveBufferToMark(methodAnalyzer.scanForMethods(bufferedFile), bufferedFile);
         fileStatsStorage.addMethod();
@@ -122,5 +117,11 @@ public class JavaAnalyzer extends Analyzer {
         if (line != null) {
             bufferedFile.reset();
         }
+    }
+
+    public void writeScanResults() throws IOException {
+        fileWriterStats.writePackages(packageList);
+        fileWriterStats.writeClasses(fileStatsStorage.getClassList());
+        fileWriterStats.writeMethod(fileStatsStorage.getMethodList());
     }
 }

@@ -9,7 +9,6 @@ public class ClassAnalyzer {
 
     private FileStatsStorage fileStatsStorage;
 
-
     public ClassAnalyzer(FileStatsStorage fileStatsStorage) {
         this.fileStatsStorage = fileStatsStorage;
     }

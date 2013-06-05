@@ -11,7 +11,7 @@ public class ClassStats {
 
     public ClassStats() {
         this.className = "";
-        this.packageWhereIBelong ="";
+        this.packageWhereIBelong = "";
         this.atributeNumber = 0;
         this.methodNumber = 0;
         this.classLineNumber = 0;
