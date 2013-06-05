@@ -19,8 +19,8 @@ public class ImportAnalyzer {
     }
 
     public void scanForImports(BufferedReader bufferedFile) throws IOException {
-        String line;
-        while ((line = bufferedFile.readLine()) != null && !line.contains("public ")) {
+        String line;String condition = "public ";
+        while ((line = bufferedFile.readLine()) != null && !line.contains(condition)) {
             bufferedFile.mark(line.length());
             isPackage(line);
             isImport(line);

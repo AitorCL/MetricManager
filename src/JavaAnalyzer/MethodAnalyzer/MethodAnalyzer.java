@@ -28,7 +28,8 @@ public class MethodAnalyzer {
         String line = bufferedFile.readLine();
         fileStatsStorage.getClassStat().increaseClassLines();
         CommentAnalyzer commentAnalyzer = new CommentAnalyzer(fileStatsStorage.getClassStat());
-        while ((line) != null && !line.contains("public class ")) {
+        while ((line) != null && 
+                !line.contains("public class ")) {
             isMethod(line);
             commentAnalyzer.searchComment(line);
             line = nextLine(line, bufferedFile);
@@ -99,7 +100,7 @@ public class MethodAnalyzer {
     private boolean isMethodHead(String line) {
         return (line.contains("public ")
                 || line.contains("private ")
-                || line.contains("protected ")) && (line.contains(") {") || line.contains("){"));
+                || line.contains("protected ")) && ((line.contains(") {") || line.contains("){") || line.contains("throws ")));
     }
 
     public void decreaseMethodBracer() {

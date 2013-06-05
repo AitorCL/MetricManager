@@ -17,7 +17,7 @@ public class ClassAnalyzer {
         String line;
         CommentAnalyzer commentAnalyzer = new CommentAnalyzer(fileStatsStorage.getClassStat());
         while ((line = bufferedFile.readLine()) != null) {
-            if (line.contains("public class ")) {
+            if (line.contains("public class ") || line.contains("public abstract class ")) {
                 updateClassStats(line);
                 return true;
             } else {

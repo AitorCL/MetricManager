@@ -63,10 +63,6 @@ public class JavaAnalyzer extends Analyzer {
         startScan(bufferedFile, file);
     }
 
-    public FileStatsStorage getFileStatsStorage() {
-        return fileStatsStorage;
-    }
-
     private BufferedReader getFileBuffer(File file) throws FileNotFoundException, IOException {
         return new BufferedReader(new FileReader(file));
     }
@@ -123,5 +119,9 @@ public class JavaAnalyzer extends Analyzer {
         fileWriterStats.writePackages(packageList);
         fileWriterStats.writeClasses(fileStatsStorage.getClassList());
         fileWriterStats.writeMethod(fileStatsStorage.getMethodList());
+    }
+    
+    public FileStatsStorage getFileStatsStorage() {
+        return fileStatsStorage;
     }
 }
